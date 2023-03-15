@@ -1,0 +1,28 @@
+---
+- name: "Ensure that the app port is accessible"
+  ansible.builtin.wait_for:
+    port: "{{ port }}"
+  loop: "{{ quarkus_app_ports }}"
+  loop_control:
+    loop_var: port
+  when:
+    - quarkus_app_ports is defined
+    - quarkus_app_ports | length > 0
+
+- block:
+
+    - name: "Populate service facts"
+      ansible.builtin.service_facts:
+
+    - name: "Ensure Quarkus app service is running: {{ quarkus_app_service_name }}"
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services is defined
+          - ansible_facts.services["{{ quarkus_app_service_name }}.service"] is defined
+          - ansible_facts.services["{{ quarkus_app_service_name }}.service"]['status'] is defined
+          - ansible_facts.services["{{ quarkus_app_service_name }}.service"]['status'] == 'enabled'
+          - ansible_facts.services["{{ quarkus_app_service_name }}.service"]['state'] is defined
+          - ansible_facts.services["{{ quarkus_app_service_name }}.service"]['state'] == 'running'
+        quiet: true
+  when:
+    - quarkus_app_service_name is defined

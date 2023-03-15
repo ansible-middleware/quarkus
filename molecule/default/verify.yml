@@ -1,0 +1,10 @@
+---
+- name: Validation
+  hosts: all
+  tasks:
+    - name: "Verify that Quarkus app is deployed properly."
+      ansible.builtin.include_role:
+        name: quarkus
+        tasks_from: validate_deployment.yml
+      vars:
+        app_name: getting-started

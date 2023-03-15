@@ -1,0 +1,5 @@
+---
+- import_playbook: ../../playbooks/playbook.yml
+  vars:
+    quarkus_app_workdir: /opt/workdir
+    quarkus_builder_host: instance

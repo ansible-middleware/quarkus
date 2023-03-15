@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=A Quarkus service named {{ quarkus_app_service_name }}
+After=syslog.target network.target
+
+[Service]
+User={{ quarkus_app_user }}
+Group={{ quarkus_app_group }}
+#
+ExecStart=java -jar {{ quarkus_path_to_folder_to_deploy }}/quarkus-run.jar
+
+[Install]
+WantedBy=multi-user.target

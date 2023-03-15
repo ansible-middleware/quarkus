@@ -1,0 +1,20 @@
+---
+- name: "Build and deploy a Quarkus app using Ansible"
+  hosts: all
+  gather_facts: false
+  vars:
+    quarkus_app_repo_url: 'https://github.com/quarkusio/quarkus-quickstarts.git'
+    app_name: getting-started
+    quarkus_app_source_folder: getting-started
+    quarkus_path_to_folder_to_deploy: /opt/quarkus_deploy
+  pre_tasks:
+    - name: "Build the Quarkus from {{ quarkus_app_repo_url }}."
+      ansible.builtin.include_role:
+        name: quarkus
+        tasks_from: build.yml
+
+  tasks:
+    - name: "Deploy webapp on target."
+      ansible.builtin.include_role:
+        name: quarkus
+        tasks_from: deploy.yml

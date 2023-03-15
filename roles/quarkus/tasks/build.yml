@@ -1,0 +1,67 @@
+---
+- name: "Ensure required parameters are provided."
+  ansible.builtin.assert:
+    that:
+      - quarkus_builder_host is defined
+      - quarkus_app_repo_url is defined
+      - quarkus_app_workdir is defined
+    quiet: true
+
+- name: "Define path to mvnw script."
+  ansible.builtin.set_fact:
+    path_to_mvnw: "{{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}/mvnw"
+
+- name: "Build app from {{ quarkus_app_repo_url }} on '{{ quarkus_builder_host }}'."
+  delegate_to: "{{ quarkus_builder_host }}"
+  block:
+    - name: "Ensure that builder host {{ quarkus_builder_host }} has appropriate JDK installed: {{ quarkus_java_package_version }}"
+      ansible.builtin.package:
+        name: "{{ quarkus_java_package_version }}"
+        state: present
+      become: true
+      when:
+        - quarkus_java_package_version is defined and quarkus_java_package_version | length > 0
+
+    - name: "Delete previous workdir (if requested)."
+      ansible.builtin.file:
+        path: "{{ quarkus_app_workdir }}"
+        state: absent
+      changed_when: false
+      when:
+        - quarkus_build_delete_workdir is defined
+        - quarkus_build_delete_workdir
+
+    - name: "Ensure app workdir exists: {{ quarkus_app_workdir }}"
+      ansible.builtin.file:
+        path: "{{ quarkus_app_workdir }}"
+        owner: "{{ quarkus_app_builder_user | default(omit) }}"
+        group: "{{ quarkus_app_builder_group | default(omit) }}"
+        state: directory
+
+    - name: "Checkout the application source code."
+      ansible.builtin.git:
+        repo: "{{ quarkus_app_repo_url }}"
+        dest: "{{ quarkus_app_workdir }}"
+        owner: "{{ quarkus_app_builder_user | default(omit) }}"
+        group: "{{ quarkus_app_builder_group | default(omit) }}"
+        version: "{{ app_tag | default(omit) }}"
+
+#    - name: "Ensure {{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}/mvnw"
+#      ansible.builtin.command: "/usr/bin/dos2unix {{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}/mvnw"
+#      when:
+#        - quarkus_apply_dos2unix_to_mvnw is defined and quarkus_apply_dos2unix_to_mvnw
+
+    - name: "Build the App using Maven"
+      ansible.builtin.command: "{{ quarkus_build_shell_interpreter }} ./mvnw package"
+      register: mvn_build
+      environment:
+        JAVA_HOME: "{{ quarkus_java_home }}"
+      args:
+        chdir: "{{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}"
+      changed_when: false
+
+    - name: "Display build application log"
+      ansible.builtin.debug:
+        var: mvn_build.stdout
+      when:
+        - display_mvn_output is defined

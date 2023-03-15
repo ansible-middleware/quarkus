@@ -13,8 +13,8 @@ quarkus_app_group: "{{ quarkus_app_user }}"
 
 quarkus_app_service_name: "{{ app_name }}"
 quarkus_deploy_systemd_service_conf: "/etc/{{ app_name }}.conf"
+quarkus_app_validation_host: localhost
 quarkus_systemd_service_template: 'templates/service_systemd.j2'
 quarkus_systemd_home: '/usr/lib/systemd/system'
 
-quarkus_app_ports:
-  - 8080
+quarkus_app_port: 8080

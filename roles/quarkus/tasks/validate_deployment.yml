@@ -1,13 +1,16 @@
 ---
 - name: "Ensure that the app port is accessible"
   ansible.builtin.wait_for:
-    port: "{{ port }}"
-  loop: "{{ quarkus_app_ports }}"
-  loop_control:
-    loop_var: port
+    port: "{{ quarkus_app_port }}"
   when:
-    - quarkus_app_ports is defined
-    - quarkus_app_ports | length > 0
+    - quarkus_app_port is defined
+    - quarkus_app_port | length > 0
+
+- name: "Ensure that webapp is reachable"
+  ansible.builtin.get_url:
+    url: "http://{{ quarkus_app_validation_host }}:{{ quarkus_app_port }}/"
+    dest: '/dev/null'
+  changed_when: false
 
 - block:
 

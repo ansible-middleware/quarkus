@@ -1,0 +1,34 @@
+---
+namespace: middleware_automation
+name: quarkus
+version: "1.0.0"
+readme: README.md
+authors:
+  - Romain Pelisse <rpelisse@redhat.com>
+description: Install...
+license_file: "LICENSE"
+tags:
+  - quarkus
+  - redhat
+  - rhel
+  - tools
+  - application
+  - java
+dependencies: {}
+repository: https://github.com/ansible-middleware/quarkus
+documentation: https://ansible-middleware.github.io/quarkus
+homepage: https://github.com/ansible-middleware/quarkus
+issues: https://github.com/ansible-middleware/quarkus/issues
+build_ignore:
+  - .gitignore
+  - .github
+  - .ansible-lint
+  - .yamllint
+  - '*.tar.gz'
+  - '*.zip'
+  - molecule
+  - changelogs
+  - docs/_gh_include
+  - docs/conf.py
+  - docs/roles.rst.template
+  - docs/requirements.yml

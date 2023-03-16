@@ -7,9 +7,8 @@
     - quarkus_app_port | length > 0
 
 - name: "Ensure that webapp is reachable"
-  ansible.builtin.get_url:
+  ansible.builtin.uri:
     url: "http://{{ quarkus_app_validation_host }}:{{ quarkus_app_port }}/"
-    dest: '/dev/null'
   changed_when: false
 
 - block:

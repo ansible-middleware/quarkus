@@ -36,6 +36,7 @@
         path: "{{ quarkus_app_workdir }}"
         owner: "{{ quarkus_app_builder_user | default(omit) }}"
         group: "{{ quarkus_app_builder_group | default(omit) }}"
+        mode: 0755
         state: directory
 
     - name: "Checkout the application source code."

@@ -22,7 +22,6 @@ skip_list:
 warn_list:
   - role_vars_start_with_role_name
   - vars_in_vars_files_have_valid_names
-#  - vars_should_not_be_used
   - jinja[spacing]
   - experimental
   - ignore-errors
@@ -34,8 +33,9 @@ warn_list:
   - name[template]
   - name[casing]
   - template-instead-of-copy
-  - fqcn[keyword]
   - no-changed-when
+  - key-order[task]
+  - task_has_valid_name
 
 use_default_rules: true
 parseable: true

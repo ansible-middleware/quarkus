@@ -36,6 +36,7 @@ warn_list:
   - no-changed-when
   - key-order[task]
   - task_has_valid_name
+  - no_unspecified_argument
 
 use_default_rules: true
 parseable: true

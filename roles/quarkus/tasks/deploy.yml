@@ -42,14 +42,6 @@
   when:
     - not quarkus_app_src_dir is defined
 
-- name: "List Quarkus app src dir."
-  ansible.builtin.command: "ls {{ quarkus_app_src_dir }}"
-  register: ls_dir
-
-- name: "Print result"
-  ansible.builtin.debug:
-    var: ls_dir
-
 - name: "Deploy application from  to target system"
   ansible.builtin.copy:
     src: "{{ quarkus_app_src_dir }}"

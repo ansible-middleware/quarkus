@@ -52,10 +52,11 @@
 
 - name: "Deploy application from  to target system"
   ansible.builtin.copy:
-    src: "{{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}/{{ quarkus_build_relative_path_to_deploy_dir }}/"
+    src: "{{ quarkus_app_src_dir }}"
     dest: "{{ quarkus_path_to_folder_to_deploy }}"
     owner: "{{ quarkus_app_user | default(omit) }}"
     group: "{{ quarkus_app_group | default(omit) }}"
+    remote_src: true
     mode: 0755
   become: true
   changed_when: false

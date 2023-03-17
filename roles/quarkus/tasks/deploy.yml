@@ -33,7 +33,7 @@
     path: "{{ quarkus_path_to_folder_to_deploy }}"
     state: directory
     owner: "{{ quarkus_app_user | default(omit) }}"
-    group: "{{ quarkus_app_group | default(omit }}"
+    group: "{{ quarkus_app_group | default(omit) }}"
     mode: 0755
 
 - name: "Deploy application from  to target system"

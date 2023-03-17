@@ -4,7 +4,7 @@
     port: "{{ quarkus_app_port }}"
   when:
     - quarkus_app_port is defined
-    - quarkus_app_port | length > 0
+    - quarkus_app_port | int > 0
 
 - name: "Ensure that webapp is reachable"
   ansible.builtin.uri:

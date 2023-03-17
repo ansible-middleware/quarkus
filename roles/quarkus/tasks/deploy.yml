@@ -28,6 +28,14 @@
   when:
     - quarkus_app_user is defined
 
+- name: "Ensure deployement directory exits: {{ quarkus_path_to_folder_to_deploy }}."
+  ansible.builtin.file:
+    path: "{{ quarkus_path_to_folder_to_deploy }}"
+    state: directory
+    owner: "{{ quarkus_app_user | default(omit) }}"
+    group: "{{ quarkus_app_group | default(omit }}"
+    mode: 0755
+
 - name: "Deploy application from  to target system"
   ansible.builtin.copy:
     src: "{{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}/{{ quarkus_build_relative_path_to_deploy_dir }}/"
@@ -70,3 +78,20 @@
     enabled: true
   when:
     - quarkus_app_service_name is defined
+
+- block:
+    - name: "Ensure firewalld is available."
+      become: true
+      ansible.builtin.package:
+        name: "{{ quarkus_firewalld_package }}"
+        state: present
+
+    - name: "Configure firewall for {{ quarkus_app_port_firewalld }} ports"
+      become: yes
+      ansible.posix.firewalld:
+        port: "{{ quarkus_app_port_firewalld }}"
+        permanent: true
+        state: enabled
+        immediate: yes
+  when:
+    - quarkus_app_firewalld_enabled is defined and quarkus_app_firewalld_enabled

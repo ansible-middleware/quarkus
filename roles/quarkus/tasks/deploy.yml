@@ -36,6 +36,20 @@
     group: "{{ quarkus_app_group | default(omit) }}"
     mode: 0755
 
+- name: "Set Quarkus app source dir (if not defined)."
+  ansible.builtin.set_fact:
+    quarkus_app_src_dir: "{{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}/{{ quarkus_build_relative_path_to_deploy_dir }}/"
+  when:
+    - not quarkus_app_src_dir is defined
+
+- name: "List Quarkus app src dir."
+  ansible.builtin.command: "ls {{ quarkus_app_src_dir }}"
+  register: ls_dir
+
+- name: "Print result"
+  ansible.builtin.debug:
+    var: ls_dir
+
 - name: "Deploy application from  to target system"
   ansible.builtin.copy:
     src: "{{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}/{{ quarkus_build_relative_path_to_deploy_dir }}/"

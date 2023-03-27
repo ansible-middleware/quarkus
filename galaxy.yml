@@ -5,7 +5,7 @@ version: "1.0.0"
 readme: README.md
 authors:
   - Romain Pelisse <rpelisse@redhat.com>
-description: Install...
+description: Build and deploy a Quarkus based app from the Git repository URL
 license_file: "LICENSE"
 tags:
   - quarkus

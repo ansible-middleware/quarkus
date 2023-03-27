@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>middleware_automation.quarkus collection &mdash; quarkus Ansible Collection  documentation</title>
+  <title>Quarkus collection for Ansible - middleware_automation.quarkus collection &mdash; quarkus Ansible Collection  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/ansible-basic-sphinx-ext.css" type="text/css" />
@@ -43,7 +43,19 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">User documentation</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">middleware_automation.quarkus collection</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quarkus collection for Ansible - middleware_automation.quarkus collection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about">About</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#i-know-nothing-about-ansible-but-i-want-to-install-my-quarkus-app-can-i">I know nothing about Ansible, but I want to install my Quarkus app, can I?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ansible-version-compatibility">Ansible version compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#included-content">Included content</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#roles">Roles</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="roles/index.html">Role Index</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Developer documentation</span></p>
@@ -84,7 +96,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">middleware_automation.quarkus collection</li>
+      <li class="breadcrumb-item active">Quarkus collection for Ansible - middleware_automation.quarkus collection</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/README.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -94,8 +106,41 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="middleware-automation-quarkus-collection">
-<h1>middleware_automation.quarkus collection<a class="headerlink" href="#middleware-automation-quarkus-collection" title="Permalink to this heading"></a></h1>
+  <section id="quarkus-collection-for-ansible-middleware-automation-quarkus-collection">
+<h1>Quarkus collection for Ansible - middleware_automation.quarkus collection<a class="headerlink" href="#quarkus-collection-for-ansible-middleware-automation-quarkus-collection" title="Permalink to this heading"></a></h1>
+<p><a class="reference external" href="https://github.com/ansible-middleware/quarkus/actions/workflows/ci.yml"><img alt="Build Status" src="https://github.com/ansible-middleware/quarkus/workflows/CI/badge.svg?branch=main" /></a></p>
+<section id="about">
+<h2>About<a class="headerlink" href="#about" title="Permalink to this heading"></a></h2>
+<p>This Ansible collection provides support to build and deploy a Quarkus app from the git repository URL.</p>
+<section id="i-know-nothing-about-ansible-but-i-want-to-install-my-quarkus-app-can-i">
+<h3>I know nothing about Ansible, but I want to install my Quarkus app, can I?<a class="headerlink" href="#i-know-nothing-about-ansible-but-i-want-to-install-my-quarkus-app-can-i" title="Permalink to this heading"></a></h3>
+<p>Yes! It’s not rocket science :)</p>
+<p>Once you have installed Ansible on your computer you can simply run the following command (note that the inventory file needs to be populated with the name(s) of the machine(s) you wish to install the Quarkus app on):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ansible-galaxy collection install middleware_automation.quarkus
+$ ansible-playbook -i inventory middleware_automation.quarkus.playbook
+</pre></div>
+</div>
+<!--start requires_ansible-->
+</section>
+</section>
+<section id="ansible-version-compatibility">
+<h2>Ansible version compatibility<a class="headerlink" href="#ansible-version-compatibility" title="Permalink to this heading"></a></h2>
+<p>This collection has been tested against following Ansible versions: <strong>&gt;=2.13.3</strong>.</p>
+</section>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this heading"></a></h2>
+<p>Plugins and modules within a collection may be tested with only specific Ansible versions. A collection may contain metadata that identifies these versions.</p>
+<!--end requires_ansible-->
+</section>
+<section id="included-content">
+<h2>Included content<a class="headerlink" href="#included-content" title="Permalink to this heading"></a></h2>
+<section id="roles">
+<h3>Roles<a class="headerlink" href="#roles" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ansible-middleware/quarkus/blob/main/roles/quarkus/README.md">quarkus</a>: clone the repo app, build the app and deploys it as a systemd service.</p></li>
+</ul>
+</section>
+</section>
 </section>
 
 

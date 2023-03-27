@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>quarkus &mdash; quarkus Ansible Collection  documentation</title>
+  <title>Quarkus Install role &mdash; quarkus Ansible Collection  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/ansible-basic-sphinx-ext.css" type="text/css" />
@@ -43,14 +43,17 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">User documentation</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../README.html">middleware_automation.quarkus collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Quarkus collection for Ansible - middleware_automation.quarkus collection</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Role Index</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">quarkus</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Quarkus Install role</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#role-defaults">Role Defaults</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#role-variables">Role Variables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#example-playbook">Example Playbook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-playbooks">Example Playbooks</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#default-install">Default Install</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#license">License</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#author-information">Author Information</a></li>
 </ul>
@@ -97,7 +100,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Role Index</a></li>
-      <li class="breadcrumb-item active">quarkus</li>
+      <li class="breadcrumb-item active">Quarkus Install role</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/roles/quarkus.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -107,27 +110,132 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="quarkus">
-<h1>quarkus<a class="headerlink" href="#quarkus" title="Permalink to this heading"></a></h1>
-<p>Install …</p>
+  <section id="quarkus-install-role">
+<h1>Quarkus Install role<a class="headerlink" href="#quarkus-install-role" title="Permalink to this heading"></a></h1>
+<p>A role to automate checkout, build and deployment of Quarkus application.</p>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
+<p>Requirements on the target system are ensured by the role.</p>
+<!--start argument_specs-->
+</section>
+<section id="role-defaults">
+<h2>Role Defaults<a class="headerlink" href="#role-defaults" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Variable</p></th>
+<th class="head text-left"><p>Description</p></th>
+<th class="head text-left"><p>Default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_builder_host</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">hostname</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">system</span> <span class="pre">in</span> <span class="pre">charge</span> <span class="pre">of</span> <span class="pre">building</span> <span class="pre">the</span> <span class="pre">Quarkus</span> <span class="pre">application</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">localhost</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_build_app</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Should</span> <span class="pre">Ansible</span> <span class="pre">build</span> <span class="pre">the</span> <span class="pre">application</span> <span class="pre">from</span> <span class="pre">source</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_build_delete_workdir</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Should</span> <span class="pre">Ansible</span> <span class="pre">delete</span> <span class="pre">the</span> <span class="pre">workdir</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_build_shell_interpreter</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Shell</span> <span class="pre">interpreter</span> <span class="pre">used</span> <span class="pre">by</span> <span class="pre">Ansible</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/bin/bash</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_build_relative_path_to_deploy_dir</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Path</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">directory</span> <span class="pre">containing</span> <span class="pre">the</span> <span class="pre">Quarkus</span> <span class="pre">app</span> <span class="pre">to</span> <span class="pre">deploy</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">target/quarkus-app/</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_java_package_version</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Package</span> <span class="pre">name</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">JDK</span> <span class="pre">to</span> <span class="pre">used</span> <span class="pre">to</span> <span class="pre">build</span> <span class="pre">and</span> <span class="pre">run</span> <span class="pre">the</span> <span class="pre">Quarkus</span> <span class="pre">app</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">'java-17-openjdk'</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_java_home</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Path</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">Java</span> <span class="pre">Home</span> <span class="pre">used</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">'/usr/lib/jvm/jre-17-openjdk'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_app_workdir</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Path</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">app</span> <span class="pre">work</span> <span class="pre">directory</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">'/tmp/workdir'</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_app_user</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">System</span> <span class="pre">user</span> <span class="pre">used</span> <span class="pre">to</span> <span class="pre">run</span> <span class="pre">the</span> <span class="pre">app</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_app</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_app_group</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">System</span> <span class="pre">group</span> <span class="pre">used</span> <span class="pre">to</span> <span class="pre">run</span> <span class="pre">the</span> <span class="pre">app</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&quot;{{</span> <span class="pre">quarkus_app_user</span> <span class="pre">}}&quot;</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_app_service_name</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Systemd</span> <span class="pre">service</span> <span class="pre">name</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">app</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&quot;{{</span> <span class="pre">app_name</span> <span class="pre">}}&quot;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_deploy_systemd_service_conf</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Path</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">(systemd)</span> <span class="pre">service</span> <span class="pre">configuration</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&quot;/etc/{{</span> <span class="pre">app_name</span> <span class="pre">}}.conf&quot;</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_app_validation_host</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Hostname</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">system</span> <span class="pre">used</span> <span class="pre">to</span> <span class="pre">validate</span> <span class="pre">that</span> <span class="pre">the</span> <span class="pre">Quarkus</span> <span class="pre">app</span> <span class="pre">has</span> <span class="pre">been</span> <span class="pre">properly</span> <span class="pre">deployed</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">localhost</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_systemd_service_template</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Path</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">template</span> <span class="pre">to</span> <span class="pre">use</span> <span class="pre">for</span> <span class="pre">systemd</span> <span class="pre">service</span> <span class="pre">definition.</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">'templates/service_systemd.j2'</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_systemd_home</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Path</span> <span class="pre">to</span> <span class="pre">systemd</span> <span class="pre">folder</span> <span class="pre">(where</span> <span class="pre">the</span> <span class="pre">service</span> <span class="pre">is</span> <span class="pre">deployed)</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">'/usr/lib/systemd/system'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_app_port</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Network</span> <span class="pre">port</span> <span class="pre">used</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">Quarkus</span> <span class="pre">app</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">8080</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_app_port_firewalld</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Port</span> <span class="pre">used</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">Quarkus</span> <span class="pre">that</span> <span class="pre">needs</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">opened</span> <span class="pre">in</span> <span class="pre">firewalld</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&quot;{{</span> <span class="pre">quarkus_app_port</span> <span class="pre">}}&quot;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_app_firewalld_enabled</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Indicate</span> <span class="pre">if</span> <span class="pre">Ansible</span> <span class="pre">should</span> <span class="pre">open</span> <span class="pre">port</span> <span class="pre">in</span> <span class="pre">firewalld</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">quarkus_firewalld_package</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Package</span> <span class="pre">name</span> <span class="pre">to</span> <span class="pre">install</span> <span class="pre">firewalld.</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">firewalld</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="role-variables">
+<h2>Role Variables<a class="headerlink" href="#role-variables" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>No required variables</p></li>
+</ul>
+<!--end argument_specs-->
 </section>
 <section id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h2>
 </section>
-<section id="role-defaults">
-<h2>Role Defaults<a class="headerlink" href="#role-defaults" title="Permalink to this heading"></a></h2>
+<section id="example-playbooks">
+<h2>Example Playbooks<a class="headerlink" href="#example-playbooks" title="Permalink to this heading"></a></h2>
+<section id="default-install">
+<h3>Default Install<a class="headerlink" href="#default-install" title="Permalink to this heading"></a></h3>
+<p>Installs the default version of Quarkus to the default location with the default user.</p>
+<div class="highlight-YAML+Jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Build</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">deploy</span><span class="nv"> </span><span class="s">my</span><span class="nv"> </span><span class="s">Quarkus</span><span class="nv"> </span><span class="s">app&quot;</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">hosts_group_name</span> <span class="o">|</span> <span class="nf">default</span><span class="o">(</span><span class="s1">&#39;localhost&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span>
+<span class="w">  </span><span class="nt">collections</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">middleware_automation.quarkus</span>
+<span class="w">  </span><span class="nt">roles</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quarkus</span>
+</pre></div>
+</div>
 </section>
-<section id="role-variables">
-<h2>Role Variables<a class="headerlink" href="#role-variables" title="Permalink to this heading"></a></h2>
-</section>
-<section id="example-playbook">
-<h2>Example Playbook<a class="headerlink" href="#example-playbook" title="Permalink to this heading"></a></h2>
 </section>
 <section id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
-<p>Apache License 2.0</p>
+<p>Apache License 2</p>
 </section>
 <section id="author-information">
 <h2>Author Information<a class="headerlink" href="#author-information" title="Permalink to this heading"></a></h2>

@@ -14,7 +14,7 @@
         tasks_from: build.yml
 
   tasks:
-    - name: "Deploy webapp on target."
+    - name: "Deploy Quarkus app on target."
       ansible.builtin.include_role:
         name: quarkus
         tasks_from: deploy.yml

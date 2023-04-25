@@ -1,7 +1,7 @@
 ---
 - name: "Build and deploy a Quarkus app using Ansible"
   hosts: all
-  gather_facts: false
+  gather_facts: true
   vars:
     quarkus_app_repo_url: 'https://github.com/quarkusio/quarkus-quickstarts.git'
     app_name: getting-started

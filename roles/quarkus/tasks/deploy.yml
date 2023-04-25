@@ -11,18 +11,19 @@
   ansible.builtin.package:
     name: "{{ quarkus_openjdk_package_version }}"
     state: present
-  delegate_to: localhost
   become: true
   when:
     - quarkus_openjdk_package_version is defined
 
 - name: "Ensure Quarkus system group exists on target system"
+  become: true
   ansible.builtin.group:
     name: "{{ quarkus_app_group }}"
   when:
     - quarkus_app_group is defined
 
 - name: "Ensure Quarkus user exists on target system."
+  become: true
   ansible.builtin.user:
     name: "{{ quarkus_app_user }}"
   when:

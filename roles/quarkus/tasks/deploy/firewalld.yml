@@ -1,0 +1,14 @@
+---
+- block:
+    - name: "Ensure firewalld is available."
+      ansible.builtin.package:
+        name: "{{ quarkus_firewalld_package }}"
+        state: present
+
+    - name: "Configure firewall for {{ quarkus_app_port_firewalld }} ports"
+      ansible.posix.firewalld:
+        port: "{{ quarkus_app_port_firewalld }}"
+        permanent: true
+        state: enabled
+        immediate: yes
+  become: true

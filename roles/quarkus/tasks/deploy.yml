@@ -84,6 +84,7 @@
     name: "{{ quarkus_app_service_name }}"
     state: started
     enabled: true
+  become: true
   when:
     - quarkus_app_service_name is defined
 

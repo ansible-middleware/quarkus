@@ -1,7 +1,7 @@
 ---
 quarkus_builder_host: localhost
 quarkus_build_app: true
-quarkus_build_delete_workdir: true
+quarkus_build_delete_workdir: false
 quarkus_build_shell_interpreter: /bin/bash
 quarkus_build_relative_path_to_deploy_dir: target/quarkus-app/
 quarkus_java_package_version: 'java-17-openjdk'

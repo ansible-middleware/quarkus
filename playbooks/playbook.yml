@@ -7,6 +7,7 @@
     app_name: getting-started
     quarkus_app_source_folder: getting-started
     quarkus_path_to_folder_to_deploy: /opt/quarkus_deploy
+    quarkus_app_workdir: /root/getting-started.git
   pre_tasks:
     - name: "Build the Quarkus from {{ quarkus_app_repo_url }}."
       ansible.builtin.include_role:

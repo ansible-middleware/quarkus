@@ -31,3 +31,8 @@
   ansible.builtin.include_tasks: deploy/firewalld.yml
   when:
     - quarkus_app_firewalld_enabled is defined and quarkus_app_firewalld_enabled
+
+- name: "Verify that deployment is functional."
+  ansible.builtin.include_tasks: validate_deployment.yml
+  when:
+    - quarkus_app_validate_deployment is defined and quarkus_app_validate_deployment

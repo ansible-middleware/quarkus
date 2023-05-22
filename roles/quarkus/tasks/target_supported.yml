@@ -1,0 +1,8 @@
+---
+- name: "Ensure target node is supported."
+  ansible.builtin.assert:
+    that:
+      - ansible_os_family == 'RedHat'
+    quiet: true
+  when:
+    - ansible_os_family is defined

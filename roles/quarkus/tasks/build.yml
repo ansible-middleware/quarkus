@@ -1,4 +1,7 @@
 ---
+- name: "Ensure target node is supported."
+  ansible.builtin.include_tasks: target_supported.yml
+
 - name: "Ensure required parameters are provided."
   ansible.builtin.assert:
     that:

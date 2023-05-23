@@ -37,6 +37,8 @@ warn_list:
   - key-order[task]
   - task_has_valid_name
   - no_unspecified_argument
+  - var-naming[no-role-prefix]
+  - name[play]
 
 use_default_rules: true
 parseable: true

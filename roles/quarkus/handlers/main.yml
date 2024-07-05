@@ -1,0 +1,14 @@
+---
+- name: "Perform daemon-reload"
+  ansible.builtin.systemd:
+    daemon_reload: true
+  notify:
+    - "Ensure Quarkus app service is running"
+
+- name: "Ensure Quarkus app service is running"
+  ansible.builtin.service:
+    name: "{{ quarkus_app_service_name }}"
+    state: restarted
+    enabled: true
+  when:
+    - quarkus_app_service_name is defined

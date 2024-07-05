@@ -5,9 +5,6 @@ dependency:
     requirements-file: molecule/requirements.yml
 driver:
   name: docker
-lint: |
-  ansible-lint --version
-  ansible-lint -v
 platforms:
   - name: instance
     image: registry.access.redhat.com/ubi8/ubi-init:latest
@@ -40,7 +37,6 @@ scenario:
     - cleanup
     - destroy
     - syntax
-    - lint
     - create
     - prepare
     - converge

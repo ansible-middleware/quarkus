@@ -1,5 +1,7 @@
 ---
-- block:
+- name: "Ensure Quarkus app is running as a systemd service on target"
+  become: "{{ quarkus_deploy_app_as_systemd_service_requires_privilege_escalation | default(True) }}"
+  block:
     - name: "Deploy application from  to target system"
       ansible.builtin.copy:
         src: "{{ quarkus_app_src_dir }}"
@@ -18,15 +20,16 @@
         group: "{{ quarkus_app_group | default(omit) }}"
         mode: 0640
       register: quarkus_deploy_systemd_service_conf
+      notify:
+        - "Perform daemon-reload"
       vars:
         service_user: "{{ quarkus_app_user | default(omit) }}"
         service_group: "{{ quarkus_app_group | default(omit) }}"
       when:
         - quarkus_app_service_name is defined
 
-    - name: "Perform daemon-reload to ensure the changes are picked up"
-      ansible.builtin.systemd:
-        daemon_reload: true
+    - name: "Perform daemon-reload immediatly if systemd config was changed."
+      meta: flush_handlers
       when:
         - quarkus_app_service_name is defined
         - quarkus_deploy_systemd_service_conf is defined
@@ -40,4 +43,3 @@
         enabled: true
       when:
         - quarkus_app_service_name is defined
-  become: true

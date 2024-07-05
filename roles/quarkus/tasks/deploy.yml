@@ -10,7 +10,7 @@
 - name: "Ensure requirements on target system are fullfilled."
   ansible.builtin.include_tasks: deploy/prereqs.yml
 
-- name: "Ensure deployement directory exits: {{ quarkus_path_to_folder_to_deploy }}."
+- name: "Ensure deployement directory exists: {{ quarkus_path_to_folder_to_deploy }}."
   ansible.builtin.file:
     path: "{{ quarkus_path_to_folder_to_deploy }}"
     state: directory

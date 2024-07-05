@@ -1,5 +1,6 @@
 ---
 - name: "Ensure requirements are fullfilled."
+  become: True
   block:
     - name: "Ensure required OpenJDK is installed on target."
       ansible.builtin.package:
@@ -19,4 +20,3 @@
         name: "{{ quarkus_app_user }}"
       when:
         - quarkus_app_user is defined
-  become: true

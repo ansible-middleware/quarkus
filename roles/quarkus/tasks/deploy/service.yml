@@ -29,7 +29,7 @@
         - quarkus_app_service_name is defined
 
     - name: "Perform daemon-reload immediatly if systemd config was changed."
-      meta: flush_handlers
+      ansible.builtin.meta: flush_handlers
       when:
         - quarkus_app_service_name is defined
         - quarkus_deploy_systemd_service_conf is defined

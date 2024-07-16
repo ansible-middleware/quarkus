@@ -47,11 +47,6 @@
         group: "{{ quarkus_app_builder_group | default(omit) }}"
         version: "{{ app_tag | default(omit) }}"
 
-#    - name: "Ensure {{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}/mvnw"
-#      ansible.builtin.command: "/usr/bin/dos2unix {{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}/mvnw"
-#      when:
-#        - quarkus_apply_dos2unix_to_mvnw is defined and quarkus_apply_dos2unix_to_mvnw
-
     - name: "Build the App using Maven"
       ansible.builtin.command: "{{ quarkus_build_shell_interpreter }} ./mvnw package"
       register: mvn_build

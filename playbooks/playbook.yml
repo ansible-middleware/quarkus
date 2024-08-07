@@ -3,12 +3,24 @@
   hosts: all
   gather_facts: true
   vars:
-    quarkus_app_repo_url: 'https://github.com/quarkusio/quarkus-quickstarts.git'
-    app_name: getting-started
-    quarkus_app_source_folder: getting-started
+    quarkus_app_source_folder: "{{ app_name }}"
     quarkus_path_to_folder_to_deploy: /opt/quarkus_deploy
-    quarkus_app_workdir: /root/getting-started.git
+    quarkus_app_workdir: "/root/{{ app_name }}.git"
   pre_tasks:
+    # app_name and quarkus_app_repo_url are NOT set so that Molecule scenarios can provides them
+    # the following defaults are to ensure the playbook works "out of the box" without adding missing information.
+    - name: "Set app_name to getting-started if not defined."
+      ansible.builtin.set_fact:
+        app_name: getting-started
+      when:
+        - not app_name is defined
+
+    - name: "Set quarkus_app_repo_url to Quarkus getting-started repository if not defined."
+      ansible.builtin.set_fact:
+        quarkus_app_repo_url: 'https://github.com/quarkusio/quarkus-quickstarts.git'
+      when:
+        - not quarkus_app_repo_url is defined
+
     - name: "Build the Quarkus from {{ quarkus_app_repo_url }}."
       ansible.builtin.include_role:
         name: quarkus

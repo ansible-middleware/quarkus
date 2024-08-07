@@ -7,20 +7,14 @@
       - quarkus_app_workdir is defined
     quiet: true
 
-- name: "Define path to mvnw script."
-  ansible.builtin.set_fact:
-    path_to_mvnw: "{{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}/mvnw"
+- name: "Ensure Maven is installed on builder (if app not using mvnw)"
+  ansible.builtin.include_tasks: mvn.yml
 
 - name: "Build app from {{ quarkus_app_repo_url }} on '{{ quarkus_builder_host }}'."
   delegate_to: "{{ quarkus_builder_host }}"
   block:
-    - name: "Ensure that builder host {{ quarkus_builder_host }} has appropriate JDK installed: {{ quarkus_java_package_version }}"
-      ansible.builtin.package:
-        name: "{{ quarkus_java_package_version }}"
-        state: present
-      become: true
-      when:
-        - quarkus_java_package_version is defined and quarkus_java_package_version | length > 0
+    - name: "Ensure Java is properly installed"
+      ansible.builtin.include_tasks: java.yml
 
     - name: "Delete previous workdir (if requested)."
       ansible.builtin.file:
@@ -47,8 +41,8 @@
         group: "{{ quarkus_app_builder_group | default(omit) }}"
         version: "{{ app_tag | default(omit) }}"
 
-    - name: "Build the App using Maven"
-      ansible.builtin.command: "{{ quarkus_build_shell_interpreter }} ./mvnw package"
+    - name: "Build the App using Maven using {{ quarkus_java_home }}"
+      ansible.builtin.command: "{{ quarkus_build_shell_interpreter }} {{ path_to_mvn }} {{ quarkus_maven_build_opts }} package"
       register: mvn_build
       environment:
         JAVA_HOME: "{{ quarkus_java_home }}"

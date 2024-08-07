@@ -6,5 +6,3 @@
       ansible.builtin.include_role:
         name: quarkus
         tasks_from: validate_deployment.yml
-      vars:
-        app_name: getting-started

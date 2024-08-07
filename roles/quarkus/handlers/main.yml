@@ -1,11 +1,15 @@
 ---
 - name: "Perform daemon-reload"
+  become: "{{ quarkus_deploy_systemd_daemon_reload_requires_become }}"
+  become_user: "{{ quarkus_deploy_systemd_daemon_reload_become_user }}"
   ansible.builtin.systemd:
     daemon_reload: true
   notify:
     - "Ensure Quarkus app service is running"
 
 - name: "Ensure Quarkus app service is running"
+  become: "{{ quarkus_deploy_systemd_daemon_reload_requires_become }}"
+  become_user: "{{ quarkus_deploy_systemd_daemon_reload_become_user }}"
   ansible.builtin.service:
     name: "{{ quarkus_app_service_name }}"
     state: restarted

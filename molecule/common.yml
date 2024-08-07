@@ -21,6 +21,8 @@
       - sudo_pkg_name in ansible_facts.packages
 
 - name: "Ensure required packages are installed."
+  become: yes
+  become_user: root
   ansible.builtin.yum:
     name:
       - git

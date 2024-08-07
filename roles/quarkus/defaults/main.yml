@@ -22,12 +22,22 @@ quarkus_maven_download_check_ssl: True
 quarkus_maven_build_opts: ''
 
 quarkus_app_workdir: '/tmp/workdir'
+quarkus_app_dir_requires_become: yes
+quarkus_app_dir_become_user: root
 quarkus_app_user: quarkus_app
 quarkus_app_group: "{{ quarkus_app_user }}"
+
+quarkus_app_builder_user_requires_become: yes
+quarkus_app_builder_user: root
+quarkus_app_builder_group: root
 
 quarkus_deploy_app_as_systemd_service_requires_privilege_escalation: True
 quarkus_app_service_name: "{{ app_name }}"
 quarkus_deploy_systemd_service_conf: "/etc/{{ app_name }}.conf"
+quarkus_deploy_systemd_daemon_reload_requires_become: yes
+quarkus_deploy_systemd_daemon_reload_become_user: root
+quarkus_path_to_folder_to_deploy_requires_become: yes
+quarkus_path_to_folder_to_deploy_become_user: root
 quarkus_app_validation_host: localhost
 quarkus_systemd_service_template: 'templates/service_systemd.j2'
 quarkus_systemd_home: '/usr/lib/systemd/system'

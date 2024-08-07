@@ -1,0 +1,7 @@
+---
+pgsql_yum_repo_baseurl: 'http://download.postgresql.org/pub/repos/yum/13/redhat/rhel-8-x86_64/'
+pgsql_service_name: postgresql-13.service
+pgsql_init_cmd: postgresql-13-setup initdb
+pgsql_app_dbname: rest-crud
+pgsql_app_user: restcrud
+pgsql_app_user_password: restcrud

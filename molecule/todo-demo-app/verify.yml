@@ -1,0 +1,8 @@
+---
+- name: Validation
+  hosts: all
+  tasks:
+    - name: "Verify that app is responding"
+      ansible.builtin.uri:
+        url: 'http://localhost:8080/'
+        status_code: 404

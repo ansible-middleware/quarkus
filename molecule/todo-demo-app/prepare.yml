@@ -1,0 +1,20 @@
+---
+- name: Prepare
+  hosts: all
+  vars_files:
+    - pgsql/vars.yml
+  tasks:
+    - name: "Ensure required packages are installed."
+      ansible.builtin.yum:
+        name:
+          - git
+          - procps-ng
+          - sudo
+        state: present
+
+    - name: "Set up DB required by ToDo app"
+      ansible.builtin.include_tasks: pgsql/set_up.yml
+
+    - name: Display Ansible version
+      ansible.builtin.debug:
+        msg: "Ansible version is  {{ ansible_version.full }}"

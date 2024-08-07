@@ -1,0 +1,52 @@
+---
+- name: "Ensure the Yum repo for Postgresql are available"
+  ansible.builtin.yum_repository:
+    name: Postgresql
+    description: Yum Repository for Postgresql
+    baseurl: "{{ pgsql_yum_repo_baseurl }}"
+  #TODO when: not RHEL
+
+- name: "Ensure Postgresql DB is installed."
+  ansible.builtin.dnf:
+    name: postgresql-server
+    # if you know where to find the rpmkey, please fill a PR :)
+    disable_gpg_check: True
+
+- name: "Ensure Posgresql DB has been initialized."
+  become: yes
+  become_user: root
+  ansible.builtin.command: "{{ pgsql_init_cmd }}"
+
+- name: "Ensure Postgresql is running"
+  ansible.builtin.service:
+    name: "{{ pgsql_service_name }}"
+    state: started
+
+- name: "Ensure required user and db are created"
+  become: yes
+  become_user: postgres
+  block:
+    - name: "Ensure app user has been created"
+      ansible.builtin.command: "createuser {{ pgsql_app_user }}"
+
+    - name: "Ensure app db has been created"
+      ansible.builtin.command: "createdb {{ pgsql_app_dbname }}"
+
+    - name: "Ensure the app user has been assigned the appropriate password"
+      ansible.builtin.command: >
+        psql -c "alter user {{ pgsql_app_user }} with encrypted password '{{ pgsql_app_user_password }}'"
+
+    - name: "Ensure the app user has been granted required privileges."
+      ansible.builtin.command: psql -c 'grant all privileges on database "{{ pgsql_app_dbname }}" to {{ pgsql_app_user }}'
+
+- name: "Ensure Postrgesql DB allows password connection from local"
+  ansible.builtin.template:
+    src: pgsql/pg_hba.conf.j2
+    dest: /var/lib/pgsql/13/data/pg_hba.conf
+  vars:
+    ident_method: md5
+
+- name: "Ensure Posgresql DB has been restarted"
+  ansible.builtin.service:
+    name: "{{ pgsql_service_name }}"
+    state: restarted

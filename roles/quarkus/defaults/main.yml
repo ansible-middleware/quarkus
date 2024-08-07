@@ -4,8 +4,22 @@ quarkus_build_app: true
 quarkus_build_delete_workdir: false
 quarkus_build_shell_interpreter: /bin/bash
 quarkus_build_relative_path_to_deploy_dir: target/quarkus-app/
-quarkus_java_package_version: 'java-17-openjdk'
-quarkus_java_home: '/usr/lib/jvm/jre-17-openjdk'
+
+quarkus_java_version: 17
+quarkus_java_package_version: "java-{{ quarkus_java_version }}-openjdk-devel"
+quarkus_skip_java_package_install: False
+quarkus_java_home: "/usr/lib/jvm/java-{{ quarkus_java_version }}-openjdk"
+quarkus_java_home_isdir: False
+quarkus_java_home_islnk: True
+
+quarkus_use_mvnw: True
+quarkus_maven_install: True
+quarkus_maven_version: 3.9.8
+quarkus_maven_download_url: "https://dlcdn.apache.org/maven/maven-3/{{ quarkus_maven_version }}/binaries/apache-maven-{{ quarkus_maven_version }}-bin.tar.gz"
+quarkus_maven_homedir: /opt/apache/maven
+quarkus_maven_homedir_name: "apache-maven-{{ quarkus_maven_version }}"
+quarkus_maven_download_check_ssl: True
+quarkus_maven_build_opts: ''
 
 quarkus_app_workdir: '/tmp/workdir'
 quarkus_app_user: quarkus_app

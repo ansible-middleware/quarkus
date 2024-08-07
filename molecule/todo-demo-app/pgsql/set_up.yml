@@ -1,26 +1,28 @@
 ---
-- name: "Ensure the Yum repo for Postgresql are available"
-  ansible.builtin.yum_repository:
-    name: Postgresql
-    description: Yum Repository for Postgresql
-    baseurl: "{{ pgsql_yum_repo_baseurl }}"
-  #TODO when: not RHEL
-
-- name: "Ensure Postgresql DB is installed."
-  ansible.builtin.dnf:
-    name: postgresql-server
-    # if you know where to find the rpmkey, please fill a PR :)
-    disable_gpg_check: True
-
-- name: "Ensure Posgresql DB has been initialized."
+- name: "Ensure yumrepo and packages are installed"
   become: yes
   become_user: root
-  ansible.builtin.command: "{{ pgsql_init_cmd }}"
+  block:
+    - name: "Ensure the Yum repo for Postgresql are available"
+      ansible.builtin.yum_repository:
+        name: Postgresql
+        description: Yum Repository for Postgresql
+        baseurl: "{{ pgsql_yum_repo_baseurl }}"
+      #TODO when: not RHEL
 
-- name: "Ensure Postgresql is running"
-  ansible.builtin.service:
-    name: "{{ pgsql_service_name }}"
-    state: started
+    - name: "Ensure Postgresql DB is installed."
+      ansible.builtin.dnf:
+        name: postgresql-server
+        # if you know where to find the rpmkey, please fill a PR :)
+        disable_gpg_check: True
+
+    - name: "Ensure Posgresql DB has been initialized."
+      ansible.builtin.command: "{{ pgsql_init_cmd }}"
+
+    - name: "Ensure Postgresql is running"
+      ansible.builtin.service:
+        name: "{{ pgsql_service_name }}"
+        state: started
 
 - name: "Ensure required user and db are created"
   become: yes
@@ -40,6 +42,8 @@
       ansible.builtin.command: psql -c 'grant all privileges on database "{{ pgsql_app_dbname }}" to {{ pgsql_app_user }}'
 
 - name: "Ensure Postrgesql DB allows password connection from local"
+  become: yes
+  become_user: postgres
   ansible.builtin.template:
     src: pgsql/pg_hba.conf.j2
     dest: /var/lib/pgsql/13/data/pg_hba.conf
@@ -47,6 +51,8 @@
     ident_method: md5
 
 - name: "Ensure Posgresql DB has been restarted"
+  become: yes
+  become_user: root
   ansible.builtin.service:
     name: "{{ pgsql_service_name }}"
     state: restarted

@@ -26,6 +26,8 @@
         - quarkus_build_delete_workdir
 
     - name: "Ensure app workdir exists: {{ quarkus_app_workdir }}"
+      become: "{{ quarkus_app_dir_requires_become }}"
+      become_user: "{{ quarkus_app_dir_become_user }}"
       ansible.builtin.file:
         path: "{{ quarkus_app_workdir }}"
         owner: "{{ quarkus_app_builder_user | default(omit) }}"
@@ -34,14 +36,16 @@
         state: directory
 
     - name: "Checkout the application source code."
+      become: "{{ quarkus_app_builder_user_requires_become }}"
+      become_user: "{{ quarkus_app_builder_user }}"
       ansible.builtin.git:
         repo: "{{ quarkus_app_repo_url }}"
         dest: "{{ quarkus_app_workdir }}"
-        owner: "{{ quarkus_app_builder_user | default(omit) }}"
-        group: "{{ quarkus_app_builder_group | default(omit) }}"
         version: "{{ app_tag | default(omit) }}"
 
-    - name: "Build the App using Maven using {{ quarkus_java_home }}"
+    - name: "Build the App using Maven using {{ quarkus_java_home }} as JAVA_HOME."
+      become: "{{ quarkus_app_dir_requires_become }}"
+      become_user: "{{ quarkus_app_dir_become_user }}"
       ansible.builtin.command: "{{ quarkus_build_shell_interpreter }} {{ path_to_mvn }} {{ quarkus_maven_build_opts }} package"
       register: mvn_build
       environment:

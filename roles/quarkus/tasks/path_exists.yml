@@ -6,7 +6,7 @@
     quiet: True
     fail_msg: "No variable named path_to_file provided."
 
-- name: "Load metadata on ${JAVA_HOME}/bin/javac {{ quarkus_file_stat }}/bin/javac"
+- name: "Load metadata on {{ path_to_file }}."
   ansible.builtin.stat:
     path: "{{ path_to_file }}"
   register: file_stat

@@ -4,13 +4,8 @@
   vars_files:
     - pgsql/vars.yml
   tasks:
-    - name: "Ensure required packages are installed."
-      ansible.builtin.yum:
-        name:
-          - git
-          - procps-ng
-          - sudo
-        state: present
+    - name: "Ensure common prepare steps are executed."
+      ansible.builtin.include_tasks: ../common.yml
 
     - name: "Set up DB required by ToDo app"
       ansible.builtin.include_tasks: pgsql/set_up.yml

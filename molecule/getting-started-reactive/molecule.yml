@@ -13,9 +13,14 @@ platforms:
       - 0.0.0.0:8080:8080/TCP
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      interpreter_python: auto_silent
+    ssh_connection:
+      pipelining: false
   playbooks:
+    prepare: ../prepare.yml
     converge: converge.yml
-    prepare: prepare.yml
     verify: verify.yml
   inventory:
     host_vars:
@@ -31,7 +36,6 @@ verifier:
   name: ansible
 scenario:
   test_sequence:
-    - dependency
     - cleanup
     - destroy
     - syntax

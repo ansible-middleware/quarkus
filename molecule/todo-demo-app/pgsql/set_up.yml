@@ -1,14 +1,19 @@
 ---
+- name: "Ensure required parameters are defined."
+  ansible.builtin.set_fact:
+    run_on_internal_ci: "{{ (lookup('ansible.builtin.env', 'JOB_NAME') != '') | ternary(True,False) }}"
+
 - name: "Ensure yumrepo and packages are installed"
   become: yes
   become_user: root
   block:
-    - name: "Ensure the Yum repo for Postgresql are available"
+    - name: "Ensure the Yum repo for Postgresql are available ({{ ansible_distribution }})"
       ansible.builtin.yum_repository:
         name: Postgresql
         description: Yum Repository for Postgresql
         baseurl: "{{ pgsql_yum_repo_baseurl }}"
-      #TODO when: not RHEL
+      when:
+        - not run_on_internal_ci
 
     - name: "Ensure Postgresql DB is installed."
       ansible.builtin.dnf:
@@ -46,7 +51,7 @@
   become_user: postgres
   ansible.builtin.template:
     src: pgsql/pg_hba.conf.j2
-    dest: /var/lib/pgsql/13/data/pg_hba.conf
+    dest: "{{ pgsql_path_to_hba_conf }}"
   vars:
     ident_method: md5
 

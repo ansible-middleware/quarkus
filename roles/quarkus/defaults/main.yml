@@ -18,6 +18,8 @@ quarkus_maven_version: 3.9.8
 quarkus_maven_download_url: "https://dlcdn.apache.org/maven/maven-3/{{ quarkus_maven_version }}/binaries/apache-maven-{{ quarkus_maven_version }}-bin.tar.gz"
 quarkus_maven_homedir: /opt/apache/maven
 quarkus_maven_homedir_name: "apache-maven-{{ quarkus_maven_version }}"
+quarkus_maven_homedir_requires_privileges: yes
+quarkus_maven_homedir_user: root
 quarkus_maven_download_check_ssl: True
 quarkus_maven_build_opts: ''
 

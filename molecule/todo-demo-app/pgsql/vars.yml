@@ -1,7 +1,9 @@
 ---
 pgsql_yum_repo_baseurl: 'http://download.postgresql.org/pub/repos/yum/13/redhat/rhel-8-x86_64/'
-pgsql_service_name: postgresql-13.service
-pgsql_init_cmd: postgresql-13-setup initdb
+# "{{ (item|int < 11)|ternary('rw', 'dp') }}"
+pgsql_service_name: "{{ (run_on_internal_ci) | ternary('postgresql.service', 'postgresql-13.service') }}"
+pgsql_init_cmd: "{{ (run_on_internal_ci) | ternary('postgresql-setup --initdb', 'postgresql-13-setup initdb') }}"
+pgsql_path_to_hba_conf: "{{ (run_on_internal_ci) | ternary('/var/lib/pgsql/data/pg_hba.conf','/var/lib/pgsql/13/data/pg_hba.conf') }}"
 pgsql_app_dbname: rest-crud
 pgsql_app_user: restcrud
 pgsql_app_user_password: restcrud

@@ -33,6 +33,8 @@
         fail_msg: "Can't ensure Maven is properly installed on quarkus_builder_host if quarkus_maven_download_url is not provided"
 
     - name: "Install Maven from {{ quarkus_maven_download_url }} on builder host [{{ quarkus_builder_host }}]"
+      become: "{{ quarkus_maven_homedir_requires_privileges }}"
+      become_user: "{{ quarkus_maven_homedir_user }}"
       delegate_to: "{{ quarkus_builder_host }}"
       block:
         - name: "Ensure parent dir for Maven archive exists."
@@ -41,6 +43,7 @@
             state: directory
 
         - name: "Retrieve, if needed, archive from {{ quarkus_maven_download_url }}"
+
           ansible.builtin.unarchive:
             src: "{{ quarkus_maven_download_url }}"
             dest: "{{ quarkus_maven_homedir }}"

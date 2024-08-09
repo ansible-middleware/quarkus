@@ -1,0 +1,6 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: "Ensure common prepare phase are executed"
+      ansible.builtin.include_tasks: common.yml

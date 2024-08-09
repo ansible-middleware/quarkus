@@ -13,6 +13,6 @@ jobs:
     uses: ansible-middleware/github-actions/.github/workflows/ci.yml@main
     secrets: inherit
     with:
-      fqcn: 'middleware_automation/wildfly'
+      fqcn: 'middleware_automation/quarkus'
       molecule_tests: >-
-        [ "default", "prospero", "yaml_config_validation", "install_options", "colocated_cluster" ]
+        [ "default", "getting-started-reactive", "todo-demo-app" ] 

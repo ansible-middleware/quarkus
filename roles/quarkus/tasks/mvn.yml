@@ -41,6 +41,9 @@
           ansible.builtin.file:
             path: "{{ quarkus_maven_homedir }}"
             state: directory
+            owner: "{{ quarkus_maven_homedir_user }}"
+            group: "{{ quarkus_maven_homedir_group | default(quarkus_maven_homedir_user) }}"
+            mode: 0755
 
         - name: "Retrieve, if needed, archive from {{ quarkus_maven_download_url }}"
 

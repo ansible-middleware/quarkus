@@ -1,6 +1,6 @@
 ---
 - name: "Ensure that builder host {{ quarkus_builder_host }} has appropriate JDK installed: {{ quarkus_java_package_version }}"
-  ansible.builtin.package:
+  ansible.builtin.dnf:
     name: "{{ quarkus_java_package_version }}"
     state: present
   become: true

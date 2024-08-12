@@ -20,7 +20,6 @@ Once you have installed Ansible on your computer you can simply run the followin
 
 This collection has been tested against following Ansible versions: **>=2.13.3**.
 
-
 ## Install
 
 Plugins and modules within a collection may be tested with only specific Ansible versions. A collection may contain metadata that identifies these versions.

@@ -45,6 +45,21 @@
         repo: "{{ quarkus_app_repo_url }}"
         dest: "{{ quarkus_app_workdir }}"
         version: "{{ app_tag | default(omit) }}"
+      when:
+        - quarkus_build_checkout_src_code is defined and quarkus_build_checkout_src_code
+
+    - name: "Load metadata on source directory"
+      ansible.builtin.stat:
+        path: "{{ quarkus_app_workdir }}"
+      register: source_dir
+
+    - name: "Ensure that source dir exists"
+      ansible.builtin.assert:
+        that:
+          - source_dir is defined and source_dir.stat is defined
+          - source_dir.stat.exists is defined and source_dir.stat.exists
+        quiet: True
+        fail_msg: "The root folder of the Quarkus project does not exits: {{ quarkus_app_workdir }}"
 
     - name: "Build the App using Maven using {{ quarkus_java_home }} as JAVA_HOME."
       become: "{{ quarkus_app_dir_requires_become }}"

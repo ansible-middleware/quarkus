@@ -3,3 +3,8 @@
   ansible.builtin.include_tasks: build.yml
   when:
     - quarkus_build_app is defined and quarkus_build_app
+
+- name: "Build app (if requested)."
+  ansible.builtin.include_tasks: deploy.yml
+  when:
+    - quarkus_deploy_app is defined and quarkus_deploy_app

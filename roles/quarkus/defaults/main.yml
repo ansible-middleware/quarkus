@@ -4,7 +4,6 @@ quarkus_build_app: true
 quarkus_build_delete_workdir: false
 quarkus_build_shell_interpreter: /bin/bash
 quarkus_build_relative_path_to_deploy_dir: target/quarkus-app/
-quarkus_build_checkout_src_code: True
 
 quarkus_java_version: 17
 quarkus_java_package_version: "java-{{ quarkus_java_version }}-openjdk-devel"

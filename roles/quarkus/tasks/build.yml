@@ -46,7 +46,7 @@
         dest: "{{ quarkus_app_workdir }}"
         version: "{{ app_tag | default(omit) }}"
       when:
-        - quarkus_build_checkout_src_code is defined and quarkus_build_checkout_src_code
+        - quarkus_app_repo_url is defined and quarkus_app_repo_url
 
     - name: "Load metadata on source directory"
       ansible.builtin.stat:

@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+
+JAVA_HOME={{ quarkus_java_home }}
+{%if quarkus_java_opts is defined %}JAVA_OPTS='{{ quarkus_java_opts }}'{%endif%}

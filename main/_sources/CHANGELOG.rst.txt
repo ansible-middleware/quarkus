@@ -7,6 +7,17 @@ middleware\_automation.quarkus Release Notes
 v1.0.1
 ======
 
+Minor Changes
+-------------
+
+- Add scenarios `#8 <https://github.com/ansible-middleware/quarkus/pull/8>`_
+- Ensures collection check that target hosts belong to the RedHat family `#5 <https://github.com/ansible-middleware/quarkus/pull/5>`_
+
+Bugfixes
+--------
+
+- Java home `#9 <https://github.com/ansible-middleware/quarkus/pull/9>`_
+
 v1.0.0
 ======
 

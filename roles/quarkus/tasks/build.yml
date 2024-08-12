@@ -6,7 +6,6 @@
   ansible.builtin.assert:
     that:
       - quarkus_builder_host is defined
-      - quarkus_app_repo_url is defined
       - quarkus_app_workdir is defined
     quiet: true
 

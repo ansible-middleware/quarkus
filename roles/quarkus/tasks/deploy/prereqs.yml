@@ -7,6 +7,7 @@
         name: "{{ quarkus_openjdk_package_version }}"
         state: present
       when:
+        - quarkus_deploy_skip_java_package_install is defined and not quarkus_deploy_skip_java_package_install
         - quarkus_openjdk_package_version is defined
 
     - name: "Ensure Quarkus system group exists on target system"

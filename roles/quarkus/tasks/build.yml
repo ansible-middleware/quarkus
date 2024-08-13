@@ -36,6 +36,8 @@
         group: "{{ quarkus_app_builder_group | default(omit) }}"
         mode: 0755
         state: directory
+      when:
+        - quarkus_build_check_workdir is defined and quarkus_build_check_workdir
 
     - name: "Checkout the application source code."
       become: "{{ quarkus_app_builder_user_requires_become }}"

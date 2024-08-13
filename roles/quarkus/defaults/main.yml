@@ -2,12 +2,12 @@
 quarkus_builder_host: localhost
 quarkus_build_app: true
 quarkus_build_delete_workdir: false
+quarkus_build_check_workdir: true
 quarkus_build_shell_interpreter: /bin/bash
 quarkus_build_relative_path_to_deploy_dir: target/quarkus-app/
 
 quarkus_java_version: 17
 quarkus_java_package_version: "java-{{ quarkus_java_version }}-openjdk-devel"
-quarkus_skip_java_package_install: False
 quarkus_java_home: "/usr/lib/jvm/java-{{ quarkus_java_version }}-openjdk"
 quarkus_java_home_isdir: False
 quarkus_java_home_islnk: True
@@ -28,8 +28,10 @@ quarkus_app_dir_requires_become: yes
 quarkus_app_dir_become_user: root
 quarkus_app_user: quarkus_app
 quarkus_app_group: "{{ quarkus_app_user }}"
+quarkus_app_src_dir_remote: true
 
-quarkus_app_builder_user_requires_become: yes
+quarkus_app_builder_user_requires_become: true
+quarkus_app_builder_skip_install_java_package: false
 quarkus_app_builder_user: root
 quarkus_app_builder_group: root
 
@@ -40,6 +42,7 @@ quarkus_deploy_systemd_service_env_conf: "/etc/{{ app_name }}.conf"
 quarkus_deploy_systemd_service_env_template: templates/service_env.j2
 quarkus_deploy_systemd_daemon_reload_requires_become: yes
 quarkus_deploy_systemd_daemon_reload_become_user: root
+quarkus_deploy_skip_java_package_install: False
 quarkus_path_to_folder_to_deploy_requires_become: yes
 quarkus_path_to_folder_to_deploy_become_user: root
 quarkus_app_validation_host: localhost

@@ -18,6 +18,7 @@ Minor Changes
 Bugfixes
 --------
 
+- Ensure that java pkg name is defined `#13 <https://github.com/ansible-middleware/quarkus/pull/13>`_
 - Java home `#9 <https://github.com/ansible-middleware/quarkus/pull/9>`_
 
 v1.0.0

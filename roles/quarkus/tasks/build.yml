@@ -24,8 +24,7 @@
         state: absent
       changed_when: false
       when:
-        - quarkus_build_delete_workdir is defined
-        - quarkus_build_delete_workdir
+        - quarkus_build_delete_workdir is defined and quarkus_build_delete_workdir
 
     - name: "Ensure app workdir exists: {{ quarkus_app_workdir }}"
       become: "{{ quarkus_app_dir_requires_become }}"

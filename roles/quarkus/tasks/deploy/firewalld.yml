@@ -1,14 +1,15 @@
 ---
-- block:
+- name: "Enable firewalld config for Quarkus app"
+  become: true
+  block:
     - name: "Ensure firewalld is available."
       ansible.builtin.package:
         name: "{{ quarkus_firewalld_package }}"
         state: present
 
-    - name: "Configure firewall for {{ quarkus_app_port_firewalld }} ports"
+    - name: "Ensure Quarkus App port is open: {{ quarkus_app_port_firewalld }}"
       ansible.posix.firewalld:
         port: "{{ quarkus_app_port_firewalld }}"
         permanent: true
         state: enabled
         immediate: yes
-  become: true

@@ -12,7 +12,7 @@
 - name: "Ensure Maven is installed on builder (if app not using mvnw)"
   ansible.builtin.include_tasks: mvn.yml
 
-- name: "Build app from {{ quarkus_app_repo_url }} on '{{ quarkus_builder_host }}'."
+- name: "Build app on: {{ quarkus_builder_host }}"
   delegate_to: "{{ quarkus_builder_host }}"
   block:
     - name: "Ensure Java is properly installed"
@@ -61,7 +61,7 @@
         quiet: True
         fail_msg: "The root folder of the Quarkus project does not exits: {{ quarkus_app_workdir }}"
 
-    - name: "Build the App using Maven using {{ quarkus_java_home }} as JAVA_HOME."
+    - name: "Build the App using Maven with JAVA_HOME: {{ quarkus_java_home }}"
       become: "{{ quarkus_app_dir_requires_become }}"
       become_user: "{{ quarkus_app_dir_become_user }}"
       ansible.builtin.command: "{{ quarkus_build_shell_interpreter }} {{ path_to_mvn }} {{ quarkus_maven_build_opts }} package"

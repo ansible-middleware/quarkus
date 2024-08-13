@@ -11,7 +11,7 @@
     path: "{{ path_to_file }}"
   register: file_stat
 
-- name: "Ensure that file {{ path_to_file }} exists"
+- name: "Ensure that following file exists: {{ path_to_file }}"
   ansible.builtin.assert:
     that:
       - file_stat is defined and file_stat.stat is defined and file_stat.stat.exists is defined and file_stat.stat.exists

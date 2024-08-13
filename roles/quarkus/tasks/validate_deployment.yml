@@ -10,9 +10,14 @@
   ansible.builtin.uri:
     url: "http://{{ quarkus_app_validation_host }}:{{ quarkus_app_port }}/"
   changed_when: false
+  when:
+    - quarkus_app_validation_host is defined and quarkus_app_validation_host | length > 0
+    - quarkus_app_port is defined and quarkus_app_port | int > 0
 
-- block:
-
+- name: "Ensure that service associated to Quarkus app is enabled and running"
+  when:
+    - quarkus_app_service_name is defined
+  block:
     - name: "Populate service facts"
       ansible.builtin.service_facts:
 
@@ -26,5 +31,3 @@
           - ansible_facts.services["{{ quarkus_app_service_name }}.service"]['state'] is defined
           - ansible_facts.services["{{ quarkus_app_service_name }}.service"]['state'] == 'running'
         quiet: true
-  when:
-    - quarkus_app_service_name is defined

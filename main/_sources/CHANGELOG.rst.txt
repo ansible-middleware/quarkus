@@ -12,6 +12,7 @@ Minor Changes
 
 - Add scenarios `#8 <https://github.com/ansible-middleware/quarkus/pull/8>`_
 - Ensures collection check that target hosts belong to the RedHat family `#5 <https://github.com/ansible-middleware/quarkus/pull/5>`_
+- Rework how the Java package installation can be skipped (for both builder and targets) `#12 <https://github.com/ansible-middleware/quarkus/pull/12>`_
 - refactor git checkout bypass `#11 <https://github.com/ansible-middleware/quarkus/pull/11>`_
 
 Bugfixes

@@ -8,7 +8,7 @@
     - quarkus_app_builder_skip_install_java_package is defined and not quarkus_app_builder_skip_install_java_package
     - quarkus_java_package_version is defined and quarkus_java_package_version | length > 0
 
-- name: "Ensure that JAVA_HOME {{ quarkus_java_home }} exists"
+- name: "Ensure that JAVA_HOME exists: {{ quarkus_java_home }}"
   ansible.builtin.include_tasks: path_exists.yml
   vars:
     path_to_file: "{{ quarkus_java_home }}"

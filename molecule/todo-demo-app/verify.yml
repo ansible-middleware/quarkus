@@ -3,6 +3,9 @@
   hosts: all
   tasks:
     - name: "Verify that app is responding"
-      ansible.builtin.uri:
-        url: 'http://localhost:8080/'
-        status_code: 404
+      ansible.builtin.include_role:
+        name: quarkus
+        tasks_from: validate_deployment.yml
+      vars:
+        quarkus_app_validation_paths:
+          - { path: /api }

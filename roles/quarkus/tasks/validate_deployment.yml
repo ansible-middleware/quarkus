@@ -8,9 +8,12 @@
 
 - name: "Ensure that webapp is reachable"
   ansible.builtin.uri:
-    url: "http://{{ quarkus_app_validation_host }}:{{ quarkus_app_port }}/"
+    url: "http://{{ quarkus_app_validation_host }}:{{ quarkus_app_port }}/{{ item.path }}"
+    status_code: "{{ item.status_code | default(200) }}"
   changed_when: false
+  loop: "{{ quarkus_app_validation_paths }}"
   when:
+    - quarkus_app_validation_paths is defined and quarkus_app_validation_paths | length > 0
     - quarkus_app_validation_host is defined and quarkus_app_validation_host | length > 0
     - quarkus_app_port is defined and quarkus_app_port | int > 0
 

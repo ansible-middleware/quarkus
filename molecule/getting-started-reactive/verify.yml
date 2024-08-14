@@ -6,3 +6,6 @@
       ansible.builtin.include_role:
         name: quarkus
         tasks_from: validate_deployment.yml
+      vars:
+        quarkus_app_validation_paths:
+          - { path: 'hello/greeting/Bob' }

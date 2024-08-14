@@ -26,6 +26,22 @@
       when:
         - quarkus_build_delete_workdir is defined and quarkus_build_delete_workdir
 
+    - name: "Determine Quarkus app builder user and group (if required)"
+      when:
+        - quarkus_app_builder_non_root_username is defined
+      block:
+        - name: "Define Quarkus app builder username, if not defined, to {{ quarkus_app_builder_non_root_username }}"
+          ansible.builtin.set_fact:
+            quarkus_app_builder_user: "{{ quarkus_app_builder_non_root_username }}"
+          when:
+            - not quarkus_app_builder_user is defined
+
+        - name: "Define Quarkus app builder group, if not defined, to {{ quarkus_app_builder_non_root_username }}"
+          ansible.builtin.set_fact:
+            quarkus_app_builder_group: "{{ quarkus_app_builder_non_root_username }}"
+          when:
+            - not quarkus_app_builder_group is defined
+
     - name: "Ensure app workdir exists: {{ quarkus_app_workdir }}"
       become: "{{ quarkus_app_dir_requires_become }}"
       become_user: "{{ quarkus_app_dir_become_user }}"
@@ -40,7 +56,7 @@
 
     - name: "Checkout the application source code."
       become: "{{ quarkus_app_builder_user_requires_become }}"
-      become_user: "{{ quarkus_app_builder_user }}"
+      become_user: "{{ quarkus_app_builder_user | default(omit) }}"
       ansible.builtin.git:
         repo: "{{ quarkus_app_repo_url }}"
         dest: "{{ quarkus_app_workdir }}"

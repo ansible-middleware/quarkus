@@ -1,18 +1,16 @@
 ---
 quarkus_build_app: true
-quarkus_build_check_workdir: true
+quarkus_build_check_workdir: "{{ quarkus_app_builder_non_root_username is defined | ternary(false, true) }}"
 quarkus_build_delete_workdir: false
 quarkus_builder_host: localhost
 quarkus_build_relative_path_to_deploy_dir: target/quarkus-app/
 quarkus_build_shell_interpreter: /bin/bash
 
-quarkus_app_builder_group: root
 quarkus_app_builder_skip_install_java_package: false
-quarkus_app_builder_user_requires_become: true
-quarkus_app_builder_user: root
+quarkus_app_builder_user_requires_become: "{{ quarkus_app_builder_non_root_username is defined | ternary(false, true) }}"
 
 quarkus_app_dir_become_user: root
-quarkus_app_dir_requires_become: yes
+quarkus_app_dir_requires_become: "{{ quarkus_app_builder_non_root_username is defined | ternary(false, true) }}"
 quarkus_app_firewalld_enabled: false
 quarkus_app_group: "{{ quarkus_app_user }}"
 quarkus_app_port: 8080

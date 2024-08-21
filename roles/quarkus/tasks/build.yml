@@ -90,6 +90,6 @@
 
     - name: "Display build application log"
       ansible.builtin.debug:
-        var: mvn_build.stdout
+        var: "{{ mvn_build.stdout | split('\n') }}}"
       when:
         - display_mvn_output is defined

@@ -1,0 +1,11 @@
+---
+- name: "Ensure Quarkus app is running as a systemd service on target"
+  become: "{{ quarkus_deploy_app_as_systemd_service_requires_privilege_escalation | default(True) }}"
+  block:
+    - name: "Ensure app is deployed on target (unless deployment disabled)"
+      ansible.builtin.include_tasks: app.yml
+      when:
+        - quarkus_app_already_deployed is defined and not quarkus_app_already_deployed
+
+    - name: "Ensure app is running as a service on target"
+      ansible.builtin.include_tasks: service.yml

@@ -30,7 +30,7 @@
     - not quarkus_app_src_dir is defined
 
 - name: "Deploy application as a systemd service on target system."
-  ansible.builtin.include_tasks: deploy/service.yml
+  ansible.builtin.include_tasks: deploy/main.yml
 
 - name: "Ensure firewalld configuration is appropriate (if requested)."
   ansible.builtin.include_tasks: deploy/firewalld.yml

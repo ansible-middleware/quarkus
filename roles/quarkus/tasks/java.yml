@@ -1,5 +1,5 @@
 ---
-- name: "Ensure that builder host {{ quarkus_builder_host }} has appropriate JDK installed: {{ quarkus_java_package_version }}"
+- name: "Ensure that builder host has the appropriate JDK installed: {{ quarkus_java_package_version }}"
   ansible.builtin.dnf:
     name: "{{ quarkus_java_package_version }}"
     state: present
@@ -11,9 +11,9 @@
 - name: "Ensure that JAVA_HOME exists: {{ quarkus_java_home }}"
   ansible.builtin.include_tasks: path_exists.yml
   vars:
-    path_to_file: "{{ quarkus_java_home }}"
-    file_isdir: "{{ quarkus_java_home_isdir }}"
-    file_islnk: "{{ quarkus_java_home_islnk }}"
+    quarkus_path_to_file: "{{ quarkus_java_home }}"
+    quarkus_file_isdir: "{{ quarkus_java_home_isdir }}"
+    quarkus_file_islnk: "{{ quarkus_java_home_islnk }}"
 
 - name: "Ensure that  exists and is executable"
   ansible.builtin.include_tasks: path_exists.yml
@@ -21,7 +21,7 @@
     - javac
     - java
   loop_control:
-    loop_var: java_utility
+    loop_var: quarkus_java_utility
   vars:
-    path_to_file: "{{ quarkus_java_home }}/bin/{{ java_utility }}"
-    file_isexec: True
+    quarkus_path_to_file: "{{ quarkus_java_home }}/bin/{{ quarkus_java_utility }}"
+    quarkus_file_isexec: True

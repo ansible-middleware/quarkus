@@ -1,58 +1,45 @@
 ---
-- name: "Ensure Quarkus app is running as a systemd service on target"
-  become: "{{ quarkus_deploy_app_as_systemd_service_requires_privilege_escalation | default(True) }}"
-  block:
-    - name: "Deploy application to target system"
-      ansible.builtin.copy:
-        src: "{{ quarkus_app_src_dir | regex_replace('\\/$', '') }}"
-        dest: "{{ quarkus_path_to_folder_to_deploy }}"
-        owner: "{{ quarkus_app_user | default(omit) }}"
-        group: "{{ quarkus_app_group | default(omit) }}"
-        remote_src: "{{ quarkus_app_src_dir_remote }}"
-        mode: 0755
-      changed_when: "{{ quarkus_app_update | default(false) }}"
+- name: "Ensure environment file for service is deployed ({{ quarkus_deploy_systemd_service_env_conf }}"
+  ansible.builtin.template:
+    src: "{{ quarkus_deploy_systemd_service_env_template }}"
+    dest: "{{ quarkus_deploy_systemd_service_env_conf }}"
+    owner: "{{ quarkus_app_user | default(omit) }}"
+    group: "{{ quarkus_app_group | default(omit) }}"
+    mode: 0640
+  notify:
+    - 'Restart Quarkus App'
+  when:
+    - quarkus_deploy_systemd_service_env_template is defined
+    - quarkus_deploy_systemd_service_env_template | length > 0
 
-    - name: "Ensure environment file for service {{ quarkus_app_service_name }} is deployed ({{ quarkus_deploy_systemd_service_env_conf }}"
-      ansible.builtin.template:
-        src: "{{ quarkus_deploy_systemd_service_env_template }}"
-        dest: "{{ quarkus_deploy_systemd_service_env_conf }}"
-        owner: "{{ quarkus_app_user | default(omit) }}"
-        group: "{{ quarkus_app_group | default(omit) }}"
-        mode: 0640
-      notify:
-        - 'Restart Quarkus App'
-      when:
-        - quarkus_deploy_systemd_service_env_template is defined
-        - quarkus_deploy_systemd_service_env_template | length > 0
+- name: "Ensure Systemd configuration for Quarkus app is deployed"
+  ansible.builtin.template:
+    src: "{{ quarkus_systemd_service_template }}"
+    dest: "{{ quarkus_systemd_home }}/{{ quarkus_app_service_name }}.service"
+    owner: "{{ quarkus_app_user | default(omit) }}"
+    group: "{{ quarkus_app_group | default(omit) }}"
+    mode: 0640
+  register: quarkus_deploy_systemd_service_config
+  notify:
+    - "Perform daemon-reload"
+  vars:
+    service_user: "{{ quarkus_app_user | default(omit) }}"
+    service_group: "{{ quarkus_app_group | default(omit) }}"
+  when:
+    - quarkus_app_service_name is defined
 
-    - name: "Ensure Systemd configuration for Quarkus app is deployed"
-      ansible.builtin.template:
-        src: "{{ quarkus_systemd_service_template }}"
-        dest: "{{ quarkus_systemd_home }}/{{ quarkus_app_service_name }}.service"
-        owner: "{{ quarkus_app_user | default(omit) }}"
-        group: "{{ quarkus_app_group | default(omit) }}"
-        mode: 0640
-      register: quarkus_deploy_systemd_service_config
-      notify:
-        - "Perform daemon-reload"
-      vars:
-        service_user: "{{ quarkus_app_user | default(omit) }}"
-        service_group: "{{ quarkus_app_group | default(omit) }}"
-      when:
-        - quarkus_app_service_name is defined
+- name: "Perform daemon-reload immediatly if systemd config was changed."
+  ansible.builtin.meta: flush_handlers
+  when:
+    - quarkus_app_service_name is defined
+    - quarkus_deploy_systemd_service_config is defined
+    - quarkus_deploy_systemd_service_config.changed is defined
+    - quarkus_deploy_systemd_service_config.changed
 
-    - name: "Perform daemon-reload immediatly if systemd config was changed."
-      ansible.builtin.meta: flush_handlers
-      when:
-        - quarkus_app_service_name is defined
-        - quarkus_deploy_systemd_service_config is defined
-        - quarkus_deploy_systemd_service_config.changed is defined
-        - quarkus_deploy_systemd_service_config.changed
-
-    - name: "Ensure Quarkus app service is running."
-      ansible.builtin.service:
-        name: "{{ quarkus_app_service_name }}"
-        state: started
-        enabled: true
-      when:
-        - quarkus_app_service_name is defined
+- name: "Ensure Quarkus app service is running as service {{ quarkus_app_service_name }}"
+  ansible.builtin.service:
+    name: "{{ quarkus_app_service_name }}"
+    state: started
+    enabled: true
+  when:
+    - quarkus_app_service_name is defined

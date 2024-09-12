@@ -12,12 +12,12 @@
 
     - name: "Set full path to mvnw"
       ansible.builtin.set_fact:
-        path_to_mvn: "{{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}/mvnw"
+        quarkus_path_to_mvn: "{{ quarkus_app_workdir }}/{{ quarkus_app_source_folder | default('') }}/mvnw"
 
     - name: "Ensure that path to the mvn binary has been defined"
       ansible.builtin.assert:
         that:
-          - path_to_mvn is defined and path_to_mvn | length > 0
+          - quarkus_path_to_mvn is defined and quarkus_path_to_mvn | length > 0
         fail_msg: "Path to mvn is NOT defined or null or pointing to an unexisting file"
 
 - name: "App build uses Maven directly (not mvnw)"
@@ -32,12 +32,12 @@
         quiet: True
         fail_msg: "Can't ensure Maven is properly installed on quarkus_builder_host if quarkus_maven_download_url is not provided"
 
-    - name: "Install Maven from {{ quarkus_maven_download_url }} on builder host [{{ quarkus_builder_host }}]"
+    - name: "Install Maven on builder host from {{ quarkus_builder_host }}"
       become: "{{ quarkus_maven_homedir_requires_privileges }}"
       become_user: "{{ quarkus_maven_homedir_user }}"
       delegate_to: "{{ quarkus_builder_host }}"
       block:
-        - name: "Ensure parent dir for Maven archive exists."
+        - name: "Ensure parent dir for Maven archive exists on builder host: {{ quarkus_maven_homedir }}"
           ansible.builtin.file:
             path: "{{ quarkus_maven_homedir }}"
             state: directory
@@ -46,7 +46,6 @@
             mode: 0755
 
         - name: "Retrieve, if needed, archive from {{ quarkus_maven_download_url }}"
-
           ansible.builtin.unarchive:
             src: "{{ quarkus_maven_download_url }}"
             dest: "{{ quarkus_maven_homedir }}"
@@ -55,17 +54,17 @@
 
         - name: "Set full path to mvnw"
           ansible.builtin.set_fact:
-            path_to_mvn: "{{ quarkus_maven_homedir }}/{{ quarkus_maven_homedir_name }}/bin/mvn"
+            quarkus_path_to_mvn: "{{ quarkus_maven_homedir }}/{{ quarkus_maven_homedir_name }}/bin/mvn"
 
-        - name: "Load metadata on {{ path_to_mvn }}"
+        - name: "Load metadata on {{ quarkus_path_to_mvn }}"
           delegate_to: "{{ quarkus_builder_host }}"
           ansible.builtin.stat:
-            path: "{{ path_to_mvn }}"
-          register: stat_path_to_mvn
+            path: "{{ quarkus_path_to_mvn }}"
+          register: quarkus_stat_path_to_mvn
 
         - name: "Ensure that path to the mvn binary points to an existing file"
           ansible.builtin.assert:
             that:
-              - stat_path_to_mvn is defined and stat_path_to_mvn.stat is defined
-              - stat_path_to_mvn.stat.exists is defined and stat_path_to_mvn.stat.exists
+              - quarkus_stat_path_to_mvn is defined and quarkus_stat_path_to_mvn.stat is defined
+              - quarkus_stat_path_to_mvn.stat.exists is defined and quarkus_stat_path_to_mvn.stat.exists
             fail_msg: "Path to mvn points to an unexisting file"

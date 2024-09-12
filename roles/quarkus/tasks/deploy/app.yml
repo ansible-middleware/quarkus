@@ -1,0 +1,10 @@
+---
+- name: "Deploy application to target system"
+  ansible.builtin.copy:
+    src: "{{ quarkus_app_src_dir | regex_replace('\\/$', '') }}"
+    dest: "{{ quarkus_path_to_folder_to_deploy }}"
+    owner: "{{ quarkus_app_user | default(omit) }}"
+    group: "{{ quarkus_app_group | default(omit) }}"
+    remote_src: "{{ quarkus_app_src_dir_remote }}"
+    mode: 0755
+  changed_when: "{{ quarkus_app_update | default(false) }}"

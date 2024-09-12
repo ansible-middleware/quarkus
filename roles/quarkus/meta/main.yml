@@ -1,19 +1,20 @@
+---
 galaxy_info:
   role_name: quarkus
   namespace: middleware_automation
   author: Romain Pelisse
-  description: Install ...
+  description: Automate the installation and deployement of a Quarkus application
   company: Red Hat, Inc.
 
   license: Apache License 2.0
 
-  min_ansible_version: "2.9"
+  min_ansible_version: "2.16"
 
   platforms:
-   - name: EL
-     versions:
-     - 8
-
+    - name: EL
+      versions:
+        - "8"
+        - "9"
   galaxy_tags:
     - quarkus
     - redhat

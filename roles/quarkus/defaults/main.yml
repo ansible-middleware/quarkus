@@ -20,6 +20,7 @@ quarkus_app_src_dir_remote: true
 quarkus_app_user: quarkus_app
 quarkus_app_validation_host: localhost
 quarkus_app_workdir: '/tmp/workdir'
+quarkus_app_already_deployed: False
 
 quarkus_deploy_app_as_systemd_service_requires_privilege_escalation: True
 quarkus_deploy_app: True

@@ -67,21 +67,21 @@
     - name: "Load metadata on source directory"
       ansible.builtin.stat:
         path: "{{ quarkus_app_workdir }}"
-      register: source_dir
+      register: quarkus_source_dir
 
     - name: "Ensure that source dir exists"
       ansible.builtin.assert:
         that:
-          - source_dir is defined and source_dir.stat is defined
-          - source_dir.stat.exists is defined and source_dir.stat.exists
+          - quarkus_source_dir is defined and quarkus_source_dir.stat is defined
+          - quarkus_source_dir.stat.exists is defined and quarkus_source_dir.stat.exists
         quiet: True
         fail_msg: "The root folder of the Quarkus project does not exits: {{ quarkus_app_workdir }}"
 
     - name: "Build the App using Maven with JAVA_HOME: {{ quarkus_java_home }}"
       become: "{{ quarkus_app_dir_requires_become }}"
       become_user: "{{ quarkus_app_dir_become_user }}"
-      ansible.builtin.command: "{{ quarkus_build_shell_interpreter }} {{ path_to_mvn }} {{ quarkus_maven_build_opts }} package"
-      register: mvn_build
+      ansible.builtin.command: "{{ quarkus_build_shell_interpreter }} {{ quarkus_path_to_mvn }} {{ quarkus_maven_build_opts }} package"
+      register: quarkus_mvn_build
       environment:
         JAVA_HOME: "{{ quarkus_java_home }}"
       args:
@@ -90,6 +90,6 @@
 
     - name: "Display build application log"
       ansible.builtin.debug:
-        var: "{{ mvn_build.stdout | split('\n') }}}"
+        var: "{{ quarkus_mvn_build.stdout | split('\n') }}}"
       when:
         - display_mvn_output is defined

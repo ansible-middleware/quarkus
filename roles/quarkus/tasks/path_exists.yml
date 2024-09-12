@@ -2,46 +2,46 @@
 - name: "Ensure required parameters are provided."
   ansible.builtin.assert:
     that:
-      - path_to_file is defined and path_to_file | length > 0
+      - quarkus_path_to_file is defined and quarkus_path_to_file | length > 0
     quiet: True
-    fail_msg: "No variable named path_to_file provided."
+    fail_msg: "No variable named quarkus_path_to_file provided."
 
-- name: "Load metadata on {{ path_to_file }}."
+- name: "Load metadata on {{ quarkus_path_to_file }}."
   ansible.builtin.stat:
-    path: "{{ path_to_file }}"
-  register: file_stat
+    path: "{{ quarkus_path_to_file }}"
+  register: quarkus_file_stat
 
-- name: "Ensure that following file exists: {{ path_to_file }}"
+- name: "Ensure that following file exists: {{ quarkus_path_to_file }}"
   ansible.builtin.assert:
     that:
-      - file_stat is defined and file_stat.stat is defined and file_stat.stat.exists is defined and file_stat.stat.exists
+      - quarkus_file_stat is defined and quarkus_file_stat.stat is defined and quarkus_file_stat.stat.exists is defined and quarkus_file_stat.stat.exists
     quiet: True
-    fail_msg: "The file {{ path_to_file }} does not exist."
+    fail_msg: "The file {{ quarkus_path_to_file }} does not exist."
 
 - name: "Ensure that file is a directory (if requested)."
   ansible.builtin.assert:
     that:
-      - file_stat is defined and file_stat.stat is defined
-      - file_stat.stat.isdir is defined and file_stat.stat.isdir
+      - quarkus_file_stat is defined and quarkus_file_stat.stat is defined
+      - quarkus_file_stat.stat.isdir is defined and quarkus_file_stat.stat.isdir
     quiet: True
-    fail_msg: "The file {{ path_to_file }} is NOT a directory."
+    fail_msg: "The file {{ quarkus_path_to_file }} is NOT a directory."
   when:
     - file_isdir is defined and file_isdir
 
 - name: "Ensure that file is a link (if requested)."
   ansible.builtin.assert:
     that:
-      - file_stat is defined and file_stat.stat is defined
-      - file_stat.stat.islnk is defined and file_stat.stat.islnk
+      - quarkus_file_stat is defined and quarkus_file_stat.stat is defined
+      - quarkus_file_stat.stat.islnk is defined and quarkus_file_stat.stat.islnk
     quiet: True
-    fail_msg: "The file {{ path_to_file }} is NOT a link."
+    fail_msg: "The file {{ quarkus_path_to_file }} is NOT a link."
   when:
-    - file_islnk is defined and file_islnk
+    - quarkus_file_islnk is defined and quarkus_file_islnk
 
 - name: "Ensure that the file is executable (if requested)."
   ansible.builtin.assert:
     that:
-      - file_stat is defined and file_stat.stat is defined
-      - file_stat.stat.executable is defined and file_stat.stat.executable
+      - quarkus_file_stat is defined and quarkus_file_stat.stat is defined
+      - quarkus_file_stat.stat.executable is defined and quarkus_file_stat.stat.executable
   when:
     - file_isexec is defined and file_isexec

@@ -5,7 +5,7 @@
     quarkus_app_workdir: /opt/workdir
     app_name: 'todo-demo-app'
     quarkus_app_repo_url: 'https://github.com/quarkusio/todo-demo-app'
-    quarkus_app_source_folder: './'
+    quarkus_app_source_folder: ''
     quarkus_use_mvnw: False
     quarkus_java_version: 21
     quarkus_maven_build_opts: '-DskipTests=True'

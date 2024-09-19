@@ -4,3 +4,44 @@ releases:
     release_date: '2023-03-27'
   1.0.1:
     release_date: '2023-04-26'
+  1.0.2:
+    changes:
+      bugfixes:
+      - 'Ensure that java pkg name is defined `#13 <https://github.com/ansible-middleware/quarkus/pull/13>`_
+
+        '
+      - 'Java home `#9 <https://github.com/ansible-middleware/quarkus/pull/9>`_
+
+        '
+      minor_changes:
+      - 'Add scenarios `#8 <https://github.com/ansible-middleware/quarkus/pull/8>`_
+
+        '
+      - 'Allow non-root user on app builder (with only one parameter) `#16 <https://github.com/ansible-middleware/quarkus/pull/16>`_
+
+        '
+      - 'Enhance app validations tasks by passing an array of paths (and associated
+        status_code) `#15 <https://github.com/ansible-middleware/quarkus/pull/15>`_
+
+        '
+      - 'Ensures collection check that target hosts belong to the RedHat family `#5
+        <https://github.com/ansible-middleware/quarkus/pull/5>`_
+
+        '
+      - 'Rework how the Java package installation can be skipped (for both builder
+        and targets) `#12 <https://github.com/ansible-middleware/quarkus/pull/12>`_
+
+        '
+      - 'refactor git checkout bypass `#11 <https://github.com/ansible-middleware/quarkus/pull/11>`_
+
+        '
+    fragments:
+    - 11.yaml
+    - 12.yaml
+    - 13.yaml
+    - 15.yaml
+    - 16.yaml
+    - 5.yaml
+    - 8.yaml
+    - 9.yaml
+    release_date: '2024-09-19'

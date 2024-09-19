@@ -2,26 +2,13 @@
 name: Release collection
 on:
   workflow_dispatch:
-
 jobs:
   release:
-    runs-on: ubuntu-latest
-    if: github.repository == 'ansible-middleware/quarkus'
-    permissions:
-      actions: write
-      checks: write
-      contents: write
-      deployments: write
-      packages: write
-      pages: write
-    outputs:
-      tag_version: ${{ steps.get_version.outputs.TAG_VERSION }}
-    steps:
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.TRIGGERING_PAT }}
-          repository: ${{ matrix.repo }}
-          event-type: "Dependency released - Wildfly v${{ needs.release.outputs.tag_version }}"
-          client-payload: '{ "github": ${{toJson(github)}} }'
+    uses: ansible-middleware/github-actions/.github/workflows/release.yml@main
+    with:
+      collection_fqcn: 'middleware_automation.quarkus'
+      downstream_name: 'quarkus'
+      release_summary: "${{ github.event.inputs.release_summary }}"
+    secrets:
+      galaxy_token: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
+      jira_webhook: ${{ secrets.JIRA_WEBHOOK_CREATE_VERSION }}

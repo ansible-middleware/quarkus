@@ -4,8 +4,16 @@ middleware\_automation.quarkus Release Notes
 
 .. contents:: Topics
 
-v1.0.2-devel
+v1.0.3-devel
 ============
+
+Bugfixes
+--------
+
+- quarkus collection CI label is showing no status `#20 <https://github.com/ansible-middleware/quarkus/pull/20>`_
+
+v1.0.2
+======
 
 Minor Changes
 -------------

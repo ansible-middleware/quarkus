@@ -1,6 +1,6 @@
 # Quarkus collection for Ansible - middleware_automation.quarkus collection
 
-[![Build Status](https://github.com/ansible-middleware/quarkus/workflows/CI/badge.svg?branch=main)](https://github.com/ansible-middleware/quarkus/actions/workflows/ci.yml)
+[![Build Status](https://github.com/ansible-middleware/quarkus/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ansible-middleware/quarkus/actions/workflows/ci.yml)
 
 ## About
 

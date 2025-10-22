@@ -46,7 +46,7 @@ quarkus_maven_homedir: /opt/apache/maven
 quarkus_maven_homedir_requires_privileges: yes
 quarkus_maven_homedir_user: root
 quarkus_maven_install: True
-quarkus_maven_version: 3.9.8
+quarkus_maven_version: 3.8.9
 
 quarkus_path_to_folder_to_deploy_become_user: root
 quarkus_path_to_folder_to_deploy_requires_become: yes

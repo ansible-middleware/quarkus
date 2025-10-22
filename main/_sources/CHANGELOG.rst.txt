@@ -10,6 +10,7 @@ v1.0.3-devel
 Bugfixes
 --------
 
+- AMW-446 Fix quarkus_maven_version in quarkus collection `#21 <https://github.com/ansible-middleware/quarkus/pull/21>`_
 - quarkus collection CI label is showing no status `#20 <https://github.com/ansible-middleware/quarkus/pull/20>`_
 
 v1.0.2

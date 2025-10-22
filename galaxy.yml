@@ -14,6 +14,9 @@ tags:
   - tools
   - application
   - java
+  - runtimes
+  - a4mw
+  - middleware
 dependencies:
   "ansible.posix": ">=1.4.0"
 repository: https://github.com/ansible-middleware/quarkus

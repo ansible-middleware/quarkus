@@ -1,19 +1,5 @@
 ---
-driver:
-  name: docker
-platforms:
-  - name: instance
-    image: registry.access.redhat.com/ubi8/ubi-init:latest
-    pre_build_image: true
-    privileged: true
-    command: "/usr/sbin/init"
 provisioner:
-  name: ansible
-  config_options:
-    defaults:
-      interpreter_python: auto_silent
-    ssh_connection:
-      pipelining: false
   playbooks:
     prepare: ../prepare.yml
     converge: converge.yml
@@ -22,14 +8,13 @@ provisioner:
     host_vars:
       localhost:
         ansible_python_interpreter: "{{ ansible_playbook_python }}"
-      instance:
+    group_vars:
+      all:
         app_name: getting-started-reactive
-  env:
-    ANSIBLE_FORCE_COLOR: "true"
-    ANSIBLE_COLLECTIONS_PATHS: "~/.ansible/collections/"
-    ANSIBLE_ROLES_PATH: "../../roles"
+
 verifier:
   name: ansible
+
 scenario:
   test_sequence:
     - cleanup

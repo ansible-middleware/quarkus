@@ -1,0 +1,33 @@
+---
+driver:
+  name: docker
+
+platforms:
+  - name: instance-ubi9
+    image: registry.access.redhat.com/ubi9/ubi-init:latest
+    command: "/usr/sbin/init"
+    pre_build_image: true
+    privileged: true
+
+  - name: instance-ubi10
+    image: registry.access.redhat.com/ubi10/ubi-init:latest
+    command: "/usr/sbin/init"
+    pre_build_image: true
+    privileged: true
+
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      interpreter_python: /usr/bin/python3.12
+    ssh_connection:
+      pipelining: false
+  env:
+    ANSIBLE_FORCE_COLOR: "true"
+    ANSIBLE_COLLECTIONS_PATHS: "~/.ansible/collections/"
+    ANSIBLE_ROLES_PATH: "../../roles"
+  inventory:
+    group_vars:
+      all:
+        quarkus_builder_host: "{{ inventory_hostname }}"
+        quarkus_app_workdir: /opt/workdir

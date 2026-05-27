@@ -3,6 +3,8 @@
   ansible.builtin.dnf:
     name: "{{ quarkus_java_package_version }}"
     state: present
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   become: true
   when:
     - quarkus_app_builder_skip_install_java_package is defined and not quarkus_app_builder_skip_install_java_package

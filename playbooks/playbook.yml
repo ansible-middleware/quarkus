@@ -2,12 +2,12 @@
 - name: "Build and deploy a Quarkus app using Ansible"
   hosts: all
   gather_facts: true
-  roles:
-    - quarkus
   vars:
     quarkus_app_source_folder: "{{ app_name }}"
     quarkus_path_to_folder_to_deploy: /opt/quarkus_deploy
     quarkus_app_workdir: "/root/{{ app_name }}.git"
+  roles:
+    - quarkus
   pre_tasks:
     # app_name and quarkus_app_repo_url are NOT set so that Molecule scenarios can provides them
     # the following defaults are to ensure the playbook works "out of the box" without adding missing information.

@@ -19,8 +19,8 @@ Role Defaults
 |`quarkus_build_delete_workdir`| `Should Ansible delete the workdir` | `true` |
 |`quarkus_build_shell_interpreter`| `Shell interpreter used by Ansible` | `/bin/bash` |
 |`quarkus_build_relative_path_to_deploy_dir`| `Path to the directory containing the Quarkus app to deploy` | `target/quarkus-app/` |
-|`quarkus_java_package_version`| `Package name of the JDK to used to build and run the Quarkus app` | `'java-17-openjdk'` |
-|`quarkus_java_home`| `Path to the Java Home used` | `'/usr/lib/jvm/jre-17-openjdk'` |
+|`quarkus_java_package_version`| `Package name of the JDK to used to build and run the Quarkus app` | `'java-21-openjdk'` |
+|`quarkus_java_home`| `Path to the Java Home used` | `'/usr/lib/jvm/java-21-openjdk'` |
 |`quarkus_app_workdir`| `Path to the app work directory` | `'/tmp/workdir'` |
 |`quarkus_app_user`| `System user used to run the app` | `quarkus_app` |
 |`quarkus_app_group`| `System group used to run the app` | `"{{ quarkus_app_user }}"` |

@@ -42,4 +42,3 @@ warn_list:
   - name[play]
 
 use_default_rules: true
-parseable: true

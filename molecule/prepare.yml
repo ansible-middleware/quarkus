@@ -1,6 +1,10 @@
 ---
+- name: "Import Python bootstrap"
+  ansible.builtin.import_playbook: common_bootstrap.yml
+
 - name: Prepare
   hosts: all
+  gather_facts: true
   tasks:
     - name: "Ensure common prepare phase are executed"
       ansible.builtin.include_tasks: common.yml

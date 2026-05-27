@@ -18,7 +18,13 @@ Once you have installed Ansible on your computer you can simply run the followin
 <!--start requires_ansible-->
 ## Ansible version compatibility
 
-This collection has been tested against following Ansible versions: **>=2.13.3**.
+This collection has been tested against following Ansible versions: **>=2.16.0**.
+
+## Requirements
+
+- **Python**: 3.12 or later
+- **Supported platforms**: RHEL 9, RHEL 10 (and UBI equivalents)
+- **Java**: JDK 21 (default, configurable to other versions available on the platform)
 
 ## Install
 
@@ -30,3 +36,24 @@ Plugins and modules within a collection may be tested with only specific Ansible
 ### Roles
 
 * [quarkus](https://github.com/ansible-middleware/quarkus/blob/main/roles/quarkus/README.md): clone the repo app, build the app and deploys it as a systemd service.
+
+
+## Support
+
+<!--start support -->
+
+For bug reports and feature requests, use [GitHub Issues](https://github.com/ansible-middleware/quarkus/issues).
+
+<!--end support -->
+
+
+## Release and Upgrade Notes
+
+For details on changes between versions, please see the [CHANGELOG](https://github.com/ansible-middleware/quarkus/blob/main/CHANGELOG.rst) for this collection.
+
+
+## License
+
+Apache License v2.0 or later
+
+See [LICENSE](LICENSE) to view the full text.

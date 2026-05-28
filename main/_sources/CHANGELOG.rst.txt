@@ -7,6 +7,17 @@ middleware\_automation.quarkus Release Notes
 v1.0.3-devel
 ============
 
+Major Changes
+-------------
+
+- AMW-540 Fix the upstream collection requirements with common v1.2.4 `#23 <https://github.com/ansible-middleware/quarkus/pull/23>`_
+- Fix certification requirements for Quarkus `#22 <https://github.com/ansible-middleware/quarkus/pull/22>`_
+
+Minor Changes
+-------------
+
+- Fixing docs CI failure `#24 <https://github.com/ansible-middleware/quarkus/pull/24>`_
+
 Bugfixes
 --------
 

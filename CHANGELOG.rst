@@ -4,6 +4,26 @@ middleware\_automation.quarkus Release Notes
 
 .. contents:: Topics
 
+v1.0.3
+======
+
+Major Changes
+-------------
+
+- AMW-540 Fix the upstream collection requirements with common v1.2.4 `#23 <https://github.com/ansible-middleware/quarkus/pull/23>`_
+- Fix certification requirements for Quarkus `#22 <https://github.com/ansible-middleware/quarkus/pull/22>`_
+
+Minor Changes
+-------------
+
+- Fixing docs CI failure `#24 <https://github.com/ansible-middleware/quarkus/pull/24>`_
+
+Bugfixes
+--------
+
+- AMW-446 Fix quarkus_maven_version in quarkus collection `#21 <https://github.com/ansible-middleware/quarkus/pull/21>`_
+- quarkus collection CI label is showing no status `#20 <https://github.com/ansible-middleware/quarkus/pull/20>`_
+
 v1.0.2
 ======
 

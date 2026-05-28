@@ -1,0 +1,11 @@
+---
+- name: "Bootstrap Python 3.12"
+  hosts: all
+  gather_facts: false
+  vars:
+    ansible_python_interpreter: auto_silent
+  tasks:
+    - name: "Install Python 3.12"
+      ansible.builtin.dnf:
+        name: python3.12
+        state: present

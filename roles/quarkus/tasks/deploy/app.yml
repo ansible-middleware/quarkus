@@ -7,4 +7,4 @@
     group: "{{ quarkus_app_group | default(omit) }}"
     remote_src: "{{ quarkus_app_src_dir_remote }}"
     mode: 0755
-  changed_when: "{{ quarkus_app_update | default(false) }}"
+  changed_when: quarkus_app_update | default(false)

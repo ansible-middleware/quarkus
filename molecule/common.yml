@@ -6,29 +6,21 @@
     - not sudo_pkg_name is defined
 
 - name: "Ensure {{ sudo_pkg_name }} is installed (if user is root)."
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: "{{ sudo_pkg_name }}"
+    state: present
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   when:
-    - ansible_user_id == 'root'
-
-- name: Gather the package facts
-  ansible.builtin.package_facts:
-    manager: auto
-
-- name: "Check if {{ sudo_pkg_name }} is installed."
-  ansible.builtin.assert:
-    that:
-      - sudo_pkg_name in ansible_facts.packages
+    - ansible_facts['user_id'] == 'root'
 
 - name: "Ensure required packages are installed."
   become: yes
   become_user: root
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name:
       - git
       - procps-ng
     state: present
-
-- name: Display Ansible version
-  ansible.builtin.debug:
-    msg: "Ansible version is {{ ansible_version.full }}, running with Python {{ ansible_python_version }}."
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

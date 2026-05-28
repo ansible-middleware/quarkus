@@ -9,9 +9,11 @@
         - not quarkus_openjdk_package_version is defined and quarkus_java_version is defined
 
     - name: "Ensure required OpenJDK is installed on target."
-      ansible.builtin.package:
+      ansible.builtin.dnf:
         name: "{{ quarkus_openjdk_package_version }}"
         state: present
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
       when:
         - quarkus_deploy_skip_java_package_install is defined and not quarkus_deploy_skip_java_package_install
         - quarkus_openjdk_package_version is defined

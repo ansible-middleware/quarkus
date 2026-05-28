@@ -30,13 +30,13 @@
       when:
         - quarkus_app_builder_non_root_username is defined
       block:
-        - name: "Define Quarkus app builder username, if not defined, to {{ quarkus_app_builder_non_root_username }}"
+        - name: "Define Quarkus app builder username from non-root username"
           ansible.builtin.set_fact:
             quarkus_app_builder_user: "{{ quarkus_app_builder_non_root_username }}"
           when:
             - not quarkus_app_builder_user is defined
 
-        - name: "Define Quarkus app builder group, if not defined, to {{ quarkus_app_builder_non_root_username }}"
+        - name: "Define Quarkus app builder group from non-root username"
           ansible.builtin.set_fact:
             quarkus_app_builder_group: "{{ quarkus_app_builder_non_root_username }}"
           when:
@@ -61,8 +61,11 @@
         repo: "{{ quarkus_app_repo_url }}"
         dest: "{{ quarkus_app_workdir }}"
         version: "{{ app_tag | default(omit) }}"
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
       when:
-        - quarkus_app_repo_url is defined and quarkus_app_repo_url
+        - quarkus_app_repo_url is defined
+        - quarkus_app_repo_url | length > 0
 
     - name: "Load metadata on source directory"
       ansible.builtin.stat:

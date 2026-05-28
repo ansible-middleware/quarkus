@@ -6,20 +6,23 @@
 - name: "Ensure yumrepo and packages are installed"
   become: yes
   become_user: root
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   block:
-    - name: "Ensure the Yum repo for Postgresql are available ({{ ansible_distribution }})"
+    - name: "Ensure the Yum repo for Postgresql are available ({{ ansible_facts['distribution'] }})"
       ansible.builtin.yum_repository:
         name: Postgresql
         description: Yum Repository for Postgresql
         baseurl: "{{ pgsql_yum_repo_baseurl }}"
+        gpgcheck: no
       when:
         - not run_on_internal_ci
 
     - name: "Ensure Postgresql DB is installed."
       ansible.builtin.dnf:
-        name: postgresql-server
-        # if you know where to find the rpmkey, please fill a PR :)
-        disable_gpg_check: True
+        name: postgresql14-server
+        state: present
+        disable_gpg_check: yes
 
     - name: "Ensure Posgresql DB has been initialized."
       ansible.builtin.command: "{{ pgsql_init_cmd }}"

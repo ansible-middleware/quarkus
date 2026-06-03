@@ -73,3 +73,5 @@ releases:
     - 23.yaml
     - 24.yaml
     release_date: '2026-05-28'
+  1.0.4:
+    release_date: '2026-06-03'

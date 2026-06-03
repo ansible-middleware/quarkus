@@ -56,4 +56,4 @@ For details on changes between versions, please see the [CHANGELOG](https://gith
 
 Apache License v2.0 or later
 
-See [LICENSE](LICENSE) to view the full text.
+See [LICENSE](https://github.com/ansible-middleware/quarkus/blob/main/LICENSE) to view the full text.

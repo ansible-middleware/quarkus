@@ -1,28 +1,23 @@
 ---
-- name: "Ensure required parameters are defined."
-  ansible.builtin.set_fact:
-    run_on_internal_ci: "{{ (lookup('ansible.builtin.env', 'JOB_NAME') != '') | ternary(True,False) }}"
-
 - name: "Ensure yumrepo and packages are installed"
   become: yes
   become_user: root
   vars:
     ansible_python_interpreter: /usr/bin/python3
   block:
-    - name: "Ensure the Yum repo for Postgresql are available ({{ ansible_facts['distribution'] }})"
+    - name: "Ensure the Yum repo for Postgresql are available"
       ansible.builtin.yum_repository:
         name: Postgresql
         description: Yum Repository for Postgresql
         baseurl: "{{ pgsql_yum_repo_baseurl }}"
         gpgcheck: no
-      when:
-        - not run_on_internal_ci
+        enabled: yes
 
     - name: "Ensure Postgresql DB is installed."
       ansible.builtin.dnf:
         name: postgresql14-server
         state: present
-        disable_gpg_check: yes
+        enablerepo: Postgresql
 
     - name: "Ensure Posgresql DB has been initialized."
       ansible.builtin.command: "{{ pgsql_init_cmd }}"
